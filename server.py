@@ -50,14 +50,14 @@ print(f"[INIT] Loaded {len(suite.detector_ckpts)} Primary Detector Folds.", flus
 print(f"[INIT] YOLOv8 Checkpoint: {suite.yolo_ckpt} (Exists: {os.path.exists(suite.yolo_ckpt)})", flush=True)
 print(f"[INIT] Attention U-Net Checkpoint: {suite.unet_ckpt} (Exists: {os.path.exists(suite.unet_ckpt)})", flush=True)
 
-# Curate 4 preloaded clinical demo test cases
+# Curate 4 preloaded clinical demo test cases (bundled in demo_samples for standalone execution)
 DEMO_CASES = [
     {
         "id": "case_rb_positive",
         "name": "Case 1: Retinoblastoma (Patient RB-42)",
         "condition": "Retinoblastoma (Malignant)",
         "expected_verdict": "POSITIVE",
-        "path": r"Dataset\01_Fundus_Classification\Augmented_Retinoblastoma_File_1\aug_10_1050_RB42_png.rf.af2de43328269bebae2dbfa2c96d3ebf.jpg",
+        "path": os.path.join("demo_samples", "case_1_retinoblastoma.jpg") if os.path.exists(os.path.join("demo_samples", "case_1_retinoblastoma.jpg")) else r"Dataset\01_Fundus_Classification\Augmented_Retinoblastoma_File_1\aug_10_1050_RB42_png.rf.af2de43328269bebae2dbfa2c96d3ebf.jpg",
         "description": "Pediatric patient presenting with leukocoria. Confirmed intraocular retinoblastoma."
     },
     {
@@ -65,7 +65,7 @@ DEMO_CASES = [
         "name": "Case 2: Pediatric Cataract (Leukocoria Mimicker)",
         "condition": "Pediatric Cataract",
         "expected_verdict": "NEGATIVE",
-        "path": r"Dataset\01_Fundus_Classification\Pediatric_Cataract\5621050615_85cc77061a_o.jpg",
+        "path": os.path.join("demo_samples", "case_2_cataract.jpg") if os.path.exists(os.path.join("demo_samples", "case_2_cataract.jpg")) else r"Dataset\01_Fundus_Classification\Pediatric_Cataract\5621050615_85cc77061a_o.jpg",
         "description": "Benign white pupillary reflex (leukocoria) secondary to pediatric cataract without tumor."
     },
     {
@@ -73,7 +73,7 @@ DEMO_CASES = [
         "name": "Case 3: Retinopathy of Prematurity (ROP)",
         "condition": "Pediatric ROP",
         "expected_verdict": "NEGATIVE",
-        "path": r"Dataset\01_Fundus_Classification\Pediatric_ROP\031_M_GA25_BW910_PA32_DG2_PF0_D1_S01_1.jpg",
+        "path": os.path.join("demo_samples", "case_3_rop.jpg") if os.path.exists(os.path.join("demo_samples", "case_3_rop.jpg")) else r"Dataset\01_Fundus_Classification\Pediatric_ROP\031_M_GA25_BW910_PA32_DG2_PF0_D1_S01_1.jpg",
         "description": "Preterm infant retinal examination showing peripheral vascular avascularity characteristic of ROP."
     },
     {
@@ -81,7 +81,7 @@ DEMO_CASES = [
         "name": "Case 4: Healthy Infant RetCam Control",
         "condition": "Pediatric Normal RetCam",
         "expected_verdict": "NEGATIVE",
-        "path": r"Dataset\01_Fundus_Classification\Pediatric_Normal_RetCam\00569c080bf51c7f182cbe4c76f1823a.0.jpg",
+        "path": os.path.join("demo_samples", "case_4_normal.jpg") if os.path.exists(os.path.join("demo_samples", "case_4_normal.jpg")) else r"Dataset\01_Fundus_Classification\Pediatric_Normal_RetCam\00569c080bf51c7f182cbe4c76f1823a.0.jpg",
         "description": "Normal, healthy pediatric retina with crisp optic disc and clear macula."
     }
 ]
