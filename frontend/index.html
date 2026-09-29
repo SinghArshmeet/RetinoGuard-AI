@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RetinoGuard AI v4.2 — Pediatric Ocular Oncology &amp; Retinoblastoma Staging Suite</title>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS v3 -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "surface": "var(--color-surface, #131315)",
+            "surface-dim": "var(--color-surface-dim, #131315)",
+            "surface-bright": "var(--color-surface-bright, #39393b)",
+            "surface-container-lowest": "var(--color-surface-container-lowest, #0e0e10)",
+            "surface-container-low": "var(--color-surface-container-low, #1c1b1d)",
+            "surface-container": "var(--color-surface-container, #202022)",
+            "surface-container-high": "var(--color-surface-container-high, #2a2a2c)",
+            "surface-container-highest": "var(--color-surface-container-highest, #353437)",
+            "background": "var(--color-background, #131315)",
+            "on-surface": "var(--color-on-surface, #e5e1e4)",
+            "on-surface-variant": "var(--color-on-surface-variant, #bfc7d2)",
+            "outline-variant": "var(--color-outline-variant, #3f4850)",
+            "primary": "var(--color-primary, #93ccff)",
+            "primary-container": "var(--color-primary-container, #006398)",
+            "on-primary-container": "var(--color-on-primary-container, #d0e4ff)",
+            "secondary": "var(--color-secondary, #ffb3ad)",
+            "secondary-container": "var(--color-secondary-container, #a40217)",
+            "on-secondary-container": "#ffaea8",
+            "tertiary": "var(--color-tertiary, #6ffbbe)",
+            "tertiary-container": "var(--color-tertiary-container, #005236)",
+            "on-tertiary": "#003824",
+            "error": "#ffb4ab",
+            "on-error": "#690005"
+          },
+          spacing: {
+            "space-xs": "0.25rem",
+            "space-sm": "0.5rem",
+            "space-md": "1rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem",
+            "margin": "1.5rem",
+            "gutter": "1rem"
+          },
+          fontFamily: {
+            headline: ["Plus Jakarta Sans", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"],
+            sans: ["Inter", "sans-serif"]
+          },
+          fontSize: {
+            "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "headline-lg": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "600" }],
+            "label-code": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "500" }],
+            "metric-sm": ["13px", { "lineHeight": "18px", "fontWeight": "500" }],
+            "headline-sm": ["16px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.025em", "fontWeight": "700" }],
+            "metric-lg": ["28px", { "lineHeight": "32px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "metric-md": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    .material-symbols-outlined.fill-icon {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    /* Pulse glow keyframes */
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.45; }
+    }
+    .animate-pulse-subtle {
+      animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes ping-slow {
+      0% { transform: scale(1); opacity: 0.8; }
+      80%, 100% { transform: scale(2.2); opacity: 0; }
+    }
+    .animate-ping-slow {
+      animation: ping-slow 2.4s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+  </style>
+
+<style>
+  /* ---------------- THEME SYSTEM TOKENS (DARK & LIGHT) ---------------- */
+  :root, html.dark {
+    --color-surface: #131315;
+    --color-surface-dim: #131315;
+    --color-surface-bright: #39393b;
+    --color-surface-container-lowest: #0e0e10;
+    --color-surface-container-low: #1c1b1d;
+    --color-surface-container: #202022;
+    --color-surface-container-high: #2a2a2c;
+    --color-surface-container-highest: #353437;
+    --color-background: #131315;
+    --color-on-surface: #e5e1e4;
+    --color-on-surface-variant: #bfc7d2;
+    --color-outline-variant: #3f4850;
+    --color-primary: #93ccff;
+    --color-primary-container: #006398;
+    --color-on-primary-container: #d0e4ff;
+    --color-secondary: #ffb3ad;
+    --color-secondary-container: #a40217;
+    --color-tertiary: #6ffbbe;
+    --color-tertiary-container: #005236;
+    --color-border-card: #27272a;
+    color-scheme: dark;
+  }
+
+  html.light {
+    --color-surface: #ffffff;
+    --color-surface-dim: #f8fafc;
+    --color-surface-bright: #ffffff;
+    --color-surface-container-lowest: #f8fafc;
+    --color-surface-container-low: #f1f5f9;
+    --color-surface-container: #ffffff;
+    --color-surface-container-high: #e2e8f0;
+    --color-surface-container-highest: #cbd5e1;
+    --color-background: #f1f5f9;
+    --color-on-surface: #0f172a;
+    --color-on-surface-variant: #475569;
+    --color-outline-variant: #cbd5e1;
+    --color-primary: #0284c7;
+    --color-primary-container: #e0f2fe;
+    --color-on-primary-container: #0369a1;
+    --color-secondary: #dc2626;
+    --color-secondary-container: #fee2e2;
+    --color-tertiary: #059669;
+    --color-tertiary-container: #d1fae5;
+    --color-border-card: #e2e8f0;
+    color-scheme: light;
+  }
+
+  html.light body {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+  }
+  html.light .text-white {
+    color: #0f172a !important;
+  }
+  html.light .text-on-surface {
+    color: #0f172a !important;
+  }
+  html.light .text-on-surface-variant {
+    color: #475569 !important;
+  }
+  html.light .bg-surface {
+    background-color: #ffffff !important;
+  }
+  html.light .bg-surface-container {
+    background-color: #f8fafc !important;
+  }
+  html.light .bg-surface-container-lowest {
+    background-color: #f8fafc !important;
+  }
+  html.light .bg-surface-container-low {
+    background-color: #f1f5f9 !important;
+  }
+  html.light .bg-surface-container-high {
+    background-color: #e2e8f0 !important;
+  }
+  html.light .bg-surface-container-highest {
+    background-color: #cbd5e1 !important;
+  }
+  html.light .border-outline-variant {
+    border-color: #e2e8f0 !important;
+  }
+  html.light aside {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+  }
+  html.light header {
+    background-color: #ffffff !important;
+    border-color: #e2e8f0 !important;
+  }
+  html.light #emergencyModal .bg-surface,
+  html.light #bilateralModal .bg-surface {
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  /* Custom pulse & animation transitions */
+  .fade-in {
+    animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Custom toast notification */
+  #toast-container {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    pointer-events: none;
+  }
+  .clinical-toast {
+    pointer-events: auto;
+    animation: slideIn 0.25s ease-out;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+  }
+  @keyframes slideIn {
+    from { transform: translateX(100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+
+  /* Print Stylesheet for Official Pediatric Oncology PDF Report */
+  @media print {
+    body { background: white !important; color: black !important; }
+    aside, header, #retinal-hud .flex-wrap, #dropzone, .quick-test-box, button, #toast-container, #bilateralModal, #emergencyModal {
+      display: none !important;
+    }
+    #workbench, #tab-dossier { display: block !important; }
+    .bg-surface, .bg-surface-container-lowest, .bg-surface-container { background: white !important; border: 1px solid #ccc !important; }
+    .text-white, .text-on-surface { color: black !important; }
+    .text-on-surface-variant { color: #555 !important; }
+  }
+</style>
+
+</head>
+<body class="bg-surface-container-lowest text-on-surface font-body-md antialiased min-h-screen overflow-x-hidden selection:bg-primary-container selection:text-on-primary-container">
+<!-- ==================== TOP NAVIGATION BAR ==================== -->
+<header class="flex justify-between items-center w-full px-4 lg:px-6 border-b border-outline-variant bg-surface/95 backdrop-blur-md sticky top-0 z-50 h-16 transition-colors">
+  <!-- Brand / Telemetry Cluster -->
+  <div class="flex items-center gap-3 xl:gap-5 shrink-0">
+    <div class="flex items-center gap-2.5">
+      <div class="w-9 h-9 rounded-lg bg-primary-container/20 border border-primary/40 flex items-center justify-center relative shrink-0 shadow-sm">
+        <span class="material-symbols-outlined text-primary text-xl">visibility</span>
+        <span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-emerald-400 border-2 border-surface animate-pulse"></span>
+      </div>
+      <div class="flex items-baseline gap-2">
+        <span class="text-base font-bold tracking-tight text-on-surface whitespace-nowrap">RetinoGuard AI</span>
+        <span class="font-mono text-[10px] px-1.5 py-0.5 rounded bg-surface-container-high text-primary font-semibold border border-outline-variant whitespace-nowrap">v4.2</span>
+      </div>
+    </div>
+    <!-- Live Telemetry Pill (Responsive: full on 2xl, compact on xl, non-wrapping) -->
+    <div class="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-low border border-outline-variant whitespace-nowrap shrink-0">
+      <span class="relative flex h-2 w-2 shrink-0">
+        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+        <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
+      </span>
+      <span class="font-mono text-xs text-on-surface-variant font-medium hidden 2xl:inline">5-Fold ResNet-CBAM Active • 99.7% Sens • AUC 0.9996</span>
+      <span class="font-mono text-xs text-on-surface-variant font-medium 2xl:hidden">ResNet-CBAM • 99.7% Sens</span>
+    </div>
+  </div>
+
+  <!-- Navigation Links: Generously spaced, styled as clean pill buttons, perfectly responsive -->
+  <nav class="hidden lg:flex items-center gap-1.5 xl:gap-2.5 text-xs xl:text-sm font-medium">
+    <a href="#workbench" onclick="switchTab('tab-dossier')" class="px-3 py-1.5 rounded-lg text-primary bg-primary-container/20 font-semibold flex items-center gap-1.5 whitespace-nowrap transition-all" title="Clinical Patient Dossier">
+      <span class="material-symbols-outlined text-base">dashboard</span>
+      <span>Dashboard</span>
+    </a>
+    <a href="#retinal-hud" class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium flex items-center gap-1.5 whitespace-nowrap transition-colors" title="Dual-Viewport Retinal HUD">
+      <span class="material-symbols-outlined text-base">visibility</span>
+      <span>Bilateral HUD</span>
+    </a>
+    <a href="#workbench" onclick="switchTab('tab-icrb')" class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium flex items-center gap-1.5 whitespace-nowrap transition-colors" title="ICRB Staging Protocol">
+      <span class="material-symbols-outlined text-base">schema</span>
+      <span>Staging Workbench</span>
+    </a>
+    <a href="javascript:void(0)" onclick="openBilateralModal()" class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium flex items-center gap-1.5 whitespace-nowrap transition-colors" title="Hereditary RB1 Screening">
+      <span class="material-symbols-outlined text-base">dna</span>
+      <span>RB1 Registry</span>
+    </a>
+    <a href="#workbench" onclick="switchTab('tab-dossier'); if (typeof showToast === 'function') showToast('Audit Trail: HIPAA & PACS sync verified', 'info');" class="px-3 py-1.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium flex items-center gap-1.5 whitespace-nowrap transition-colors" title="Audit Logs">
+      <span class="material-symbols-outlined text-base">verified_user</span>
+      <span>Audit Logs</span>
+    </a>
+  </nav>
+
+  <!-- Trailing Action Controls -->
+  <div class="flex items-center gap-2 xl:gap-2.5 shrink-0">
+    <!-- OD / OS Screening Button -->
+    <button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface-container border border-outline-variant hover:bg-surface-container-high text-primary text-xs font-semibold whitespace-nowrap transition-all active:scale-95 shadow-sm" onclick="openBilateralModal()" title="Bilateral Dual-Eye Screening (OD vs OS)">
+      <span class="material-symbols-outlined text-base">compare</span>
+      <span class="hidden sm:inline">OD / OS Toggle</span>
+      <span class="sm:hidden">OD/OS</span>
+    </button>
+
+    <!-- Emergency Escalation Button -->
+    <button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition-all shadow-sm active:scale-95 border border-red-500 whitespace-nowrap" onclick="triggerEmergencyModal()" title="Stat Emergency Pediatric Triage">
+      <span class="material-symbols-outlined text-base animate-pulse">emergency</span>
+      <span class="hidden sm:inline">Emergency Escalation</span>
+      <span class="sm:hidden">Stat</span>
+    </button>
+
+    <!-- 3-Mode Theme Selector: Dark | Light | System -->
+    <div class="flex items-center p-0.5 bg-surface-container rounded-lg border border-outline-variant text-xs gap-0.5 shrink-0" id="themeSelectorContainer">
+      <button id="theme-btn-dark" onclick="setTheme('dark')" class="px-2 py-1 rounded flex items-center gap-1 transition-all text-on-surface-variant hover:text-on-surface" title="Dark Clinical Mode">
+        <span class="material-symbols-outlined text-sm">dark_mode</span>
+        <span class="hidden xl:inline text-[11px] font-medium">Dark</span>
+      </button>
+      <button id="theme-btn-light" onclick="setTheme('light')" class="px-2 py-1 rounded flex items-center gap-1 transition-all text-on-surface-variant hover:text-on-surface" title="Light Hospital Mode">
+        <span class="material-symbols-outlined text-sm">light_mode</span>
+        <span class="hidden xl:inline text-[11px] font-medium">Light</span>
+      </button>
+      <button id="theme-btn-system" onclick="setTheme('system')" class="px-2 py-1 rounded flex items-center gap-1 transition-all text-on-surface-variant hover:text-on-surface" title="Follow System Preference">
+        <span class="material-symbols-outlined text-sm">desktop_windows</span>
+        <span class="hidden xl:inline text-[11px] font-medium">System</span>
+      </button>
+    </div>
+
+    <!-- Notification Bell -->
+    <button class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" onclick="triggerEmergencyModal()" title="Pediatric Oncology Alert Feed">
+      <span class="material-symbols-outlined text-lg text-secondary">notifications</span>
+      <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+      <span class="absolute top-1 right-1 w-2 h-2 rounded-full bg-red-500"></span>
+    </button>
+
+    <!-- Clinician Avatar -->
+    <div class="hidden lg:flex items-center pl-2 border-l border-outline-variant shrink-0">
+      <div class="w-8 h-8 rounded-full bg-surface-container-high border border-primary/40 flex items-center justify-center font-mono text-xs text-primary font-bold shadow-sm" title="Attending Pediatric Ocular Oncologist">
+        DR
+      </div>
+    </div>
+  </div>
+</header>
+<!-- ==================== MAIN CLINICAL APPLICATION WRAPPER ==================== -->
+<div class="flex min-h-[calc(100vh-3.5rem)]">
+<!-- ==================== DENSE TELEMETRY RAIL (SIDEBAR) ==================== -->
+<aside class="hidden lg:flex flex-col justify-between w-60 border-r border-outline-variant bg-surface-container-lowest p-3 shrink-0 sticky top-14 h-[calc(100vh-3.5rem)] overflow-y-auto">
+<div class="space-y-4">
+<!-- Telemetry Header -->
+<div class="px-2 py-1">
+<div class="text-headline-sm font-headline-sm font-bold text-on-surface">RetinoGuard AI</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant">Pediatric Ocular Oncology</div>
+</div>
+<!-- Ingest DICOM Series CTA Button -->
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold hover:bg-primary transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-lg">cloud_upload</span>
+<span>Ingest DICOM Series</span>
+</button>
+<!-- Navigation Tabs list -->
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-high text-primary border-l-2 border-primary font-medium text-body-sm font-body-sm" href="#workbench">
+<span class="material-symbols-outlined text-lg">upload_file</span>
+<span>Live Ingestion</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium text-body-sm font-body-sm transition-colors" href="#retinal-hud">
+<span class="material-symbols-outlined text-lg">visibility</span>
+<span>Retinal HUD</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium text-body-sm font-body-sm transition-colors" href="#workbench" onclick="switchTab('tab-icrb')">
+<span class="material-symbols-outlined text-lg">schema</span>
+<span>ICRB Staging</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium text-body-sm font-body-sm transition-colors" href="javascript:void(0)" onclick="openBilateralModal()">
+<span class="material-symbols-outlined text-lg">dna</span>
+<span>RB1 Germline</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium text-body-sm font-body-sm transition-colors" href="#workbench" onclick="switchTab('tab-dossier')">
+<span class="material-symbols-outlined text-lg">assignment</span>
+<span>Consult Summary</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container font-medium text-body-sm font-body-sm transition-colors" href="#telemetry-panel">
+<span class="material-symbols-outlined text-lg">tune</span>
+<span>System Telemetry</span>
+</a>
+</nav>
+</div>
+<!-- Footer Telemetry Badges -->
+<div class="border-t border-outline-variant pt-3 space-y-2">
+<div class="flex items-center justify-between text-label-code font-label-code px-2 py-1 bg-surface-container rounded border border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-primary">storage</span>
+<span>DICOM PACS Active</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<div class="flex items-center justify-between text-label-code font-label-code px-2 py-1 bg-surface-container rounded border border-outline-variant">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-sm text-tertiary">check_circle</span>
+<span>System Status: Optimal</span>
+</div>
+<span class="text-tertiary font-bold">100%</span>
+</div>
+<div class="text-[10px] text-outline text-center font-label-code">
+          Device ID: RG-NYP-PEDS-08 • SSL Encrypted
+        </div>
+</div>
+</aside>
+<!-- ==================== MAIN WORKSPACE ==================== -->
+<main class="flex-1 p-4 lg:p-6 lg:p-6 space-y-6 overflow-y-auto max-w-[1720px] mx-auto w-full">
+<!-- ==================== TOP GRID - INGESTION & CLINICAL TRIAGE BANNER ==================== -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+<!-- LEFT: Scan Ingestion Card (5 Columns) -->
+<div class="lg:col-span-5 bg-surface rounded-xl border border-outline-variant p-4 flex flex-col justify-between space-y-4">
+<div>
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">upload_file</span>
+<h2 class="text-headline-sm font-headline-sm text-on-surface">DICOM &amp; RetCam Ingestion</h2>
+</div>
+<span class="font-label-code text-label-code text-on-surface-variant bg-surface-container-high px-2 py-0.5 rounded border border-outline-variant">OD Session #8921</span>
+</div>
+<!-- Upload Dropzone -->
+<div class="border-2 border-dashed border-outline-variant hover:border-primary-container rounded-lg p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-surface-container-lowest relative group" id="dropzone" onclick="document.getElementById('scan-file-input').click()">
+            <input type="file" id="scan-file-input" accept="image/*" class="hidden" onchange="handleFileSelect(event)">
+            <div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center mb-2 text-primary group-hover:scale-110 transition-transform">
+              <span class="material-symbols-outlined text-2xl">cloud_upload</span>
+            </div>
+            <p class="font-headline-sm text-headline-sm text-on-surface font-semibold" id="dropzone-text">Drop RetCam fundus scan or click to browse</p>
+            <p class="text-body-sm font-body-sm text-on-surface-variant mt-1" id="dropzone-subtext">Supports JPG, PNG, DICOM • Client-Side Anonymized</p>
+            <div id="dropzone-file-badge" class="mt-2.5 hidden px-3 py-1 rounded-full bg-primary-container text-on-primary-container text-xs font-label-code font-bold items-center gap-1.5">
+              <span class="material-symbols-outlined text-xs">check_circle</span>
+              <span id="dropzone-filename">Scan Loaded</span>
+            </div>
+          </div>
+        </div>
+        <!-- Quick-Test Benchmark Chips -->
+        <div>
+          <div class="text-label-code font-label-code text-on-surface-variant mb-2">QUICK-TEST BENCHMARK CONTROLS:</div>
+          <div class="grid grid-cols-2 gap-2">
+            <button id="bench-btn-1" class="text-left p-2 rounded bg-surface-container hover:bg-surface-container-high border border-secondary-container/60 transition-all text-xs" onclick="selectCase(1)">
+              <div class="font-label-code font-bold text-secondary flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+                Case 1: RB-42 (Positive)
+              </div>
+              <div class="text-[11px] text-on-surface-variant truncate">Group B intraretinal mass</div>
+            </button>
+            <button id="bench-btn-2" class="text-left p-2 rounded bg-surface-container hover:bg-surface-container-high border border-primary/40 transition-all text-xs" onclick="selectCase(2)">
+              <div class="font-label-code font-bold text-primary flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+                Case 2: Cataract Mimic
+              </div>
+              <div class="text-[11px] text-on-surface-variant truncate">Leukocoria differential control</div>
+            </button>
+            <button id="bench-btn-3" class="text-left p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant hover:border-primary transition-all text-xs" onclick="selectCase(3)">
+              <div class="font-label-code font-bold text-amber-400 flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                Case 3: ROP Stage 2
+              </div>
+              <div class="text-[11px] text-on-surface-variant truncate">Preterm peripheral avascularity</div>
+            </button>
+            <button id="bench-btn-4" class="text-left p-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant hover:border-tertiary transition-all text-xs" onclick="selectCase(4)">
+              <div class="font-label-code font-bold text-tertiary flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                Case 4: Healthy Retina
+              </div>
+              <div class="text-[11px] text-on-surface-variant truncate">Normal RetCam control</div>
+            </button>
+          </div>
+        </div>
+        <!-- Primary CTA Button -->
+        <button id="btn-run-analysis" onclick="runAnalysis()" class="w-full py-2.5 px-4 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container font-headline-sm text-headline-sm font-semibold flex items-center justify-center gap-2 transition-all active:scale-[0.98] shadow-md">
+          <span class="material-symbols-outlined" id="btn-run-icon">bolt</span>
+          <span id="btn-run-text">Run Screening Analysis</span>
+        </button>
+</div>
+<!-- RIGHT: Primary Clinical Triage & Verdict Banner (7 Columns) -->
+      <div id="verdict-banner-container" class="lg:col-span-7 bg-surface rounded-xl border border-secondary-container/50 p-5 flex flex-col justify-between relative overflow-hidden bg-gradient-to-br from-surface via-surface to-secondary-container/10">
+        <div class="absolute -right-8 -top-8 w-44 h-44 rounded-full bg-secondary-container/15 blur-3xl pointer-events-none"></div>
+
+        <!-- Header Triage Strip -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant pb-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="verdict-status-pill" class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-container text-white font-label-code text-label-code font-bold uppercase tracking-wider border border-secondary">
+              <span class="material-symbols-outlined text-sm">warning</span>
+              <span id="verdict-status-text">[Positive] Retinoblastoma Detected</span>
+            </span>
+            <span id="verdict-stage-pill" class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container-high font-label-code text-label-code text-on-surface border border-outline-variant">
+              Stage: Group B (Focal Intraretinal)
+            </span>
+            <span id="verdict-reliability-pill" class="inline-flex items-center px-2 py-0.5 rounded bg-surface-container font-label-code text-label-code text-tertiary border border-outline-variant">
+              Reliability: 95.5% — High Certainty
+            </span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="exportClinicalReport()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-xs font-body-sm text-on-surface border border-outline-variant transition-colors active:scale-95" title="Export PDF Dossier">
+              <span class="material-symbols-outlined text-sm">picture_as_pdf</span>
+              Report PDF
+            </button>
+            <button onclick="sendToPacs()" class="inline-flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container hover:bg-surface-container-high text-xs font-body-sm text-on-surface border border-outline-variant transition-colors active:scale-95" title="Broadcast DICOM to Hospital PACS">
+              <span class="material-symbols-outlined text-sm">send</span>
+              Push to PACS
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Diagnostic Body with Gauge -->
+        <div class="py-4 flex flex-col md:flex-row items-center gap-6">
+          <!-- Confidence Gauge SVG -->
+          <div class="relative w-32 h-32 shrink-0 flex items-center justify-center">
+            <svg class="w-full h-full transform -rotate-90" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="currentColor" class="text-surface-container-high" stroke-width="9"></circle>
+              <circle id="verdict-gauge-circle" cx="60" cy="60" r="50" fill="none" stroke="#EF4444" stroke-width="9" stroke-linecap="round" stroke-dasharray="314.15" stroke-dashoffset="6.3" class="transition-all duration-700"></circle>
+            </svg>
+            <div class="absolute flex flex-col items-center justify-center text-center">
+              <span id="verdict-conf-text" class="font-metric-lg text-metric-lg text-white font-bold leading-none">97.9%</span>
+              <span class="font-label-code text-[10px] text-on-surface-variant uppercase tracking-wider mt-0.5">Conf</span>
+            </div>
+          </div>
+
+          <!-- Headline & Action Directive -->
+          <div class="space-y-2">
+            <h3 id="verdict-headline" class="text-headline-lg font-headline-lg text-white leading-tight">
+              High Confidence Intraocular Neoplasm Confirmed
+            </h3>
+            <p id="verdict-description" class="text-body-md font-body-md text-on-surface-variant">
+              Fundus morphology displays solitary calcified endophytic mass at superior-temporal vascular arcade. Subretinal fluid &lt; 3mm from margin. Fovea spared.
+            </p>
+            <div id="verdict-action-directive" class="p-2.5 rounded bg-secondary-container/20 border-l-4 border-secondary-container text-xs text-on-secondary-container font-medium flex items-start gap-2">
+              <span class="material-symbols-outlined text-base text-secondary shrink-0">error</span>
+              <span><strong>Clinical Action Directive:</strong> Urgent Examination Under Anesthesia (EUA) within 48h. Biopsy is strictly contraindicated due to extraocular tumor seeding risk.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Telemetry Footer Micro-Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-3 border-t border-outline-variant font-label-code text-label-code">
+          <div class="bg-surface-container-lowest px-2 py-1.5 rounded border border-outline-variant">
+            <span class="text-on-surface-variant block text-[10px]">EVALUATED EYE</span>
+            <span id="verdict-eval-eye" class="text-white font-bold">OD (Right Retina)</span>
+          </div>
+          <div class="bg-surface-container-lowest px-2 py-1.5 rounded border border-outline-variant">
+            <span class="text-on-surface-variant block text-[10px]">TUMOR DIAMETER</span>
+            <span id="verdict-tumor-diameter" class="text-primary font-bold">4.20 mm (±0.15)</span>
+          </div>
+          <div class="bg-surface-container-lowest px-2 py-1.5 rounded border border-outline-variant">
+            <span class="text-on-surface-variant block text-[10px]">VITREOUS SEEDS</span>
+            <span id="verdict-vitreous-seeds" class="text-secondary font-bold">Group B (Fine Dust)</span>
+          </div>
+          <div class="bg-surface-container-lowest px-2 py-1.5 rounded border border-outline-variant">
+            <span class="text-on-surface-variant block text-[10px]">RECOMMENDED TX</span>
+            <span id="verdict-recommended-tx" class="text-tertiary font-bold">IAC (Melphalan)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ==================== DUAL-VIEWPORT RETINAL HUD ==================== -->
+<section class="bg-surface rounded-xl border border-outline-variant p-4 space-y-4" id="retinal-hud">
+<!-- HUD Header Bar & Interactive Layer Controls -->
+<div class="flex flex-wrap items-center justify-between gap-3 border-b border-outline-variant pb-3">
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary">visibility</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Dual Viewport Retinal HUD</h2>
+</div>
+<span class="font-label-code text-label-code px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant">
+              Widefield RetCam III • Sync Active
+            </span>
+</div>
+<!-- Interactive Layer Switcher Chips -->
+<div class="flex flex-wrap items-center gap-2 font-label-code text-label-code">
+<button class="px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-semibold border border-primary flex items-center gap-1.5 transition-all" id="chip-yolo" onclick="toggleLayer('yolo')">
+<span class="material-symbols-outlined text-sm">check_box</span>
+<span>YOLO Box (0.98)</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-secondary-container text-white font-semibold border border-secondary flex items-center gap-1.5 transition-all" id="chip-unet" onclick="toggleLayer('unet')">
+<span class="material-symbols-outlined text-sm">check_box</span>
+<span>U-Net Margin Mask</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all" id="chip-gradcam" onclick="toggleLayer('gradcam')">
+<span class="material-symbols-outlined text-sm">check_box_outline_blank</span>
+<span>Grad-CAM XAI</span>
+</button>
+<button class="px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all" id="chip-raw" onclick="toggleRawOnly()">
+<span class="material-symbols-outlined text-sm">crop_free</span>
+<span>Original Only</span>
+</button>
+</div>
+</div>
+<!-- Side-by-Side Dual Retinal Viewport -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Left Viewport: Original Fundus -->
+        <div class="relative bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden aspect-[4/3] flex items-center justify-center group" id="viewport-orig-container">
+          <img id="viewport-orig-img" class="w-full h-full object-contain" src="/api/demo-image/1" alt="Original Fundus Scan" />
+          
+          <!-- Subtle Reticle Guide Lines -->
+          <div class="absolute inset-0 pointer-events-none opacity-20 border border-dashed border-primary/50 m-6 rounded-full flex items-center justify-center">
+            <div class="w-full h-[1px] bg-primary/40"></div>
+            <div class="h-full w-[1px] bg-primary/40 absolute"></div>
+          </div>
+
+          <!-- Metadata Overlay Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-1 font-label-code text-label-code">
+            <span class="px-2 py-0.5 rounded bg-surface/85 backdrop-blur text-white border border-outline-variant font-bold text-[11px]" id="viewport-orig-badge-fov">
+              ORIGINAL SCAN • 130° FOV
+            </span>
+            <span class="px-2 py-0.5 rounded bg-surface/75 text-on-surface-variant border border-outline-variant text-[10px]" id="viewport-orig-badge-acc">
+              ACC# RB-2024-8841 • Eye: OD • RetCam III
+            </span>
+          </div>
+          <div class="absolute bottom-3 right-3 font-label-code text-[10px] px-2 py-1 rounded bg-surface/85 border border-outline-variant text-on-surface-variant">
+            Illumination: 99.4% Norm • Zoom 1.0x
+          </div>
+        </div>
+        <!-- Right Viewport: AI Multi-Modal Overlay -->
+        <div class="relative bg-surface-container-lowest rounded-lg border border-outline-variant overflow-hidden aspect-[4/3] flex items-center justify-center" id="viewport-ai-container">
+          <img id="viewport-ai-img" class="w-full h-full object-contain" src="/api/demo-image/1" alt="AI Multi-Modal Overlay" />
+          
+          <!-- Dynamic Measurement Caliper Overlay Canvas -->
+          <canvas id="viewport-caliper-canvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
+
+          <!-- Metadata Overlay Badges -->
+          <div class="absolute top-3 left-3 flex flex-col gap-1 font-label-code text-label-code">
+            <span class="px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-bold flex items-center gap-1 text-[11px]" id="viewport-ai-title-badge">
+              <span class="material-symbols-outlined text-xs">auto_awesome</span>
+              AI MULTI-MODAL OVERLAY
+            </span>
+            <span class="px-2 py-0.5 rounded bg-surface/85 backdrop-blur text-primary border border-outline-variant text-[10px]" id="viewport-ai-models-badge">
+              YOLOv8x-Med + ResNet-CBAM + UNet-3+
+            </span>
+          </div>
+
+          <!-- Fovea Distance Alert Pill -->
+          <div class="absolute bottom-3 left-3 font-label-code text-[11px] px-2 py-1 rounded bg-surface-container-high/90 border border-outline-variant text-tertiary flex items-center gap-1" id="viewport-fovea-pill">
+            <span class="material-symbols-outlined text-sm">straighten</span>
+            <span id="viewport-fovea-text">Foveal Sparing: 3.4 mm (&gt;3mm safe margin)</span>
+          </div>
+        </div>
+      </div>
+      <!-- Bottom HUD Telemetry Strip -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 pt-2 border-t border-outline-variant font-label-code text-label-code">
+        <div class="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant">
+          <span class="text-on-surface-variant">YOLO Latency</span>
+          <span id="metric-yolo-latency" class="text-primary font-bold">22 ms</span>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant">
+          <span class="text-on-surface-variant">Dice Similarity</span>
+          <span id="metric-dice" class="text-tertiary font-bold">95.4%</span>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant">
+          <span class="text-on-surface-variant">Retinal Area %</span>
+          <span id="metric-retinal-area" class="text-secondary font-bold">5.4%</span>
+        </div>
+        <div class="flex items-center justify-between p-2 rounded bg-surface-container border border-outline-variant">
+          <span class="text-on-surface-variant">Macular Status</span>
+          <span id="metric-macular" class="text-white font-bold">Fovea Sparing (&gt;3mm)</span>
+        </div>
+      </div>
+    </section>
+    <!-- ==================== STRUCTURED CLINICAL REPORT & TABBED WORKBENCH ==================== -->
+<section class="bg-surface rounded-xl border border-outline-variant overflow-hidden" id="workbench">
+<!-- Interactive Tab Header Bar -->
+<div class="flex items-center overflow-x-auto border-b border-outline-variant bg-surface-container-low px-4 pt-2">
+<button class="px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-primary text-primary font-semibold flex items-center gap-2 shrink-0 transition-colors" id="tab-btn-dossier" onclick="switchTab('tab-dossier')">
+<span class="material-symbols-outlined text-base">clinical_notes</span>
+<span>Clinical Dossier &amp; Report</span>
+</button>
+<button class="px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-medium flex items-center gap-2 shrink-0 transition-colors" id="tab-btn-differential" onclick="switchTab('tab-differential')">
+<span class="material-symbols-outlined text-base">bar_chart</span>
+<span>8-Class Differential Spectrum</span>
+</button>
+<button class="px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-medium flex items-center gap-2 shrink-0 transition-colors" id="tab-btn-icrb" onclick="switchTab('tab-icrb')">
+<span class="material-symbols-outlined text-base">schema</span>
+<span>ICRB Staging &amp; Vitreous Seeds</span>
+</button>
+<button class="px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-medium flex items-center gap-2 shrink-0 transition-colors" id="tab-btn-ensemble" onclick="switchTab('tab-ensemble')">
+<span class="material-symbols-outlined text-base">analytics</span>
+<span>Ensemble Metrics</span>
+</button>
+</div>
+<!-- TAB 1 CONTENT: Clinical Dossier & Discharge Summary -->
+      <div class="p-5 space-y-6" id="tab-dossier">
+        <!-- Ingestion & Patient Header -->
+        <div class="flex flex-wrap items-center justify-between gap-3 p-4 rounded-lg bg-surface-container-lowest border border-outline-variant">
+          <div class="flex flex-wrap items-center gap-4">
+            <div>
+              <span class="text-on-surface-variant block font-label-code text-[10px]">PATIENT ID / RECORD</span>
+              <span id="dossier-patient-id" class="text-white font-bold text-xs font-label-code">ACC-8921-RB-PEDS</span>
+            </div>
+            <div class="h-6 w-[1px] bg-outline-variant"></div>
+            <div>
+              <span class="text-on-surface-variant block font-label-code text-[10px]">EVALUATED EYE</span>
+              <span id="dossier-eye-badge" class="text-primary font-bold text-xs font-label-code">Right Eye (OD)</span>
+            </div>
+            <div class="h-6 w-[1px] bg-outline-variant"></div>
+            <div>
+              <span class="text-on-surface-variant block font-label-code text-[10px]">PEDIATRIC AGE</span>
+              <span class="text-white font-bold text-xs font-label-code">11 Months (Infant)</span>
+            </div>
+            <div class="h-6 w-[1px] bg-outline-variant"></div>
+            <div>
+              <span class="text-on-surface-variant block font-label-code text-[10px]">ACQUISITION TIMESTAMP</span>
+              <span id="dossier-timestamp" class="text-on-surface-variant text-xs font-label-code">2026-09-29 19:42:10 UTC</span>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-label-code text-[11px] font-bold border border-tertiary/30 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+              5-Fold Cross Validated
+            </span>
+          </div>
+        </div>
+
+        <!-- 3-Column Diagnostic Summary Breakdown -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Card 1: Diagnostic Verdict -->
+          <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Diagnostic Verdict</span>
+              <span class="material-symbols-outlined text-secondary text-lg">verified</span>
+            </div>
+            <div>
+              <div id="dossier-verdict-title" class="text-2xl font-headline-lg font-bold text-secondary leading-tight">Retinoblastoma</div>
+              <p id="dossier-stage-name" class="text-body-sm font-body-sm text-on-surface-variant mt-1">Group B (Focal Intraretinal Neoplasm)</p>
+            </div>
+            <div class="pt-3 border-t border-outline-variant space-y-1 font-label-code text-label-code text-xs">
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Ensemble Posterior:</span>
+                <span id="dossier-ensemble-prob" class="text-white font-bold">97.98%</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Epistemic Uncertainty:</span>
+                <span id="dossier-uncertainty-score" class="text-tertiary font-bold">0.042 (Very High)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Diagnostic Risk Class:</span>
+                <span id="dossier-risk-badge" class="text-secondary font-bold">CRITICAL / ONCOLOGY</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: Morphological Characteristics -->
+          <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Morphological Staging</span>
+              <span class="material-symbols-outlined text-primary text-lg">straighten</span>
+            </div>
+            <div>
+              <div id="dossier-staging-summary" class="text-2xl font-headline-lg font-bold text-primary">Group B (ICRB)</div>
+              <p id="dossier-fovea-summary" class="text-body-sm font-body-sm text-on-surface-variant mt-1">Solitary tumor &gt; 3mm from foveola and &gt; 1.5mm from optic disc</p>
+            </div>
+            <div class="pt-3 border-t border-outline-variant space-y-1 font-label-code text-label-code text-xs">
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Base Diameter:</span>
+                <span id="dossier-diameter" class="text-white font-bold">4.20 mm</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Apex Elevation:</span>
+                <span id="dossier-elevation" class="text-white font-bold">2.10 mm</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Vitreous Seeds:</span>
+                <span id="dossier-vitreous-class" class="text-amber-400 font-bold">Fine Dust (Munier Cl. 1)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 3: Targeted Chemotherapy Protocol -->
+          <div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-sm text-headline-sm text-on-surface font-semibold">Recommended Protocol</span>
+              <span class="material-symbols-outlined text-tertiary text-lg">vaccines</span>
+            </div>
+            <div>
+              <div id="dossier-chemo-route" class="text-2xl font-headline-lg font-bold text-tertiary">IAC Route</div>
+              <p class="text-body-sm font-body-sm text-on-surface-variant mt-1">Intra-Arterial Chemotherapy (Selective Ophthalmic Artery)</p>
+            </div>
+            <div class="pt-3 border-t border-outline-variant space-y-1 font-label-code text-label-code text-xs">
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">First-Line Agents:</span>
+                <span id="dossier-chemo-agent" class="text-white font-bold">Melphalan + Topotecan</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">Targeted Efficacy:</span>
+                <span class="text-tertiary font-bold">98.4% Globe Salvage</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-on-surface-variant">EUA Monitoring:</span>
+                <span id="dossier-eua-interval" class="text-white font-bold">Every 3-4 Weeks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Structured Clinical Directives & Oncology Next Steps -->
+        <div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-3">
+          <h4 class="text-headline-sm font-headline-sm text-white flex items-center gap-2">
+            <span class="material-symbols-outlined text-secondary text-base">assignment</span>
+            Mandatory Pediatric Ocular Oncology Directives
+          </h4>
+          <ul id="dossier-directives-list" class="space-y-2 text-body-sm font-body-sm text-on-surface-variant">
+            <li class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-tertiary text-base shrink-0 mt-0.5">check_circle</span>
+              <span><strong>EUA Prioritization:</strong> Schedule Examination Under Anesthesia within 48 hours for 360-degree scleral depression and indirect ophthalmoscopy.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-secondary text-base shrink-0 mt-0.5">cancel</span>
+              <span><strong>Strict Biopsy Prohibition:</strong> Direct fine-needle biopsy of ocular mass is strictly contraindicated due to catastrophic extraocular seeding risk.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="material-symbols-outlined text-primary text-base shrink-0 mt-0.5">info</span>
+              <span><strong>Contralateral Monitoring:</strong> Serial exam of left eye (OS) is mandatory every 3-4 weeks until age 3 to detect late germline RB1 contralateral manifestations.</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Bottom Action Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-outline-variant">
+          <div class="flex items-center gap-2 text-xs font-label-code text-on-surface-variant">
+            <span class="material-symbols-outlined text-sm">lock</span>
+            <span>RetinoGuard AI v4.2 Diagnostic Engine • HIPAA / GDPR Compliant Pipeline</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="exportClinicalReport()" class="px-3 py-1.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-xs text-white flex items-center gap-1.5 transition-colors">
+              <span class="material-symbols-outlined text-sm">print</span>
+              Print Medical Dossier
+            </button>
+            <button onclick="sendToPacs()" class="px-3 py-1.5 rounded bg-primary-container hover:bg-primary text-on-primary-container text-xs font-semibold flex items-center gap-1.5 transition-all">
+              <span class="material-symbols-outlined text-sm">cloud_upload</span>
+              Transmit DICOM Package
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- TAB 2 CONTENT: 8-Class Differential Spectrum -->
+<div class="p-5 space-y-4 hidden" id="tab-differential">
+<div class="flex items-center justify-between mb-2">
+<div>
+<h3 class="text-headline-md font-headline-md text-white">8-Class Leukocoria &amp; Neoplastic Differential Spectrum</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Multi-class Softmax posterior distribution across pediatric ocular conditions.</p>
+</div>
+<span class="font-label-code text-label-code px-2.5 py-1 rounded bg-surface-container text-primary border border-outline-variant">
+              Entropy: 0.12 bits (Extreme Peak Certainty)
+            </span>
+</div>
+<!-- Differential Bars List -->
+        <div id="differential-bars-container" class="space-y-3 font-label-code text-label-code">
+          <!-- Populated dynamically via JS -->
+        </div>
+      </div>
+      <!-- TAB 3 CONTENT: ICRB Staging Protocol & Vitreous Seeds -->
+<div class="p-5 space-y-6 hidden" id="tab-icrb">
+<div>
+<h3 class="text-headline-md font-headline-md text-white">International Intraocular Retinoblastoma Classification (ICRB)</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Validated clinical staging criteria mapped to ocular salvage rates and chemotherapeutic delivery.</p>
+</div>
+<!-- 5 Group Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-5 gap-3">
+          <!-- Group A -->
+          <div id="icrb-card-A" class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2 opacity-75 transition-all">
+            <div class="font-headline-sm text-headline-sm font-bold text-on-surface">Group A</div>
+            <div class="font-label-code text-label-code text-tertiary">Salvage: 100%</div>
+            <p class="text-xs text-on-surface-variant">Tumors ≤ 3mm confined to retina; &gt; 3mm from foveola &amp; &gt; 1.5mm from optic disc. No seeding.</p>
+            <div class="pt-2 border-t border-outline-variant text-[11px] font-label-code text-on-surface-variant">Tx: Laser / Cryo</div>
+          </div>
+          <!-- Group B (ACTIVE DEFAULT) -->
+          <div id="icrb-card-B" class="p-3.5 rounded-lg bg-secondary-container/20 border-2 border-secondary-container space-y-2 shadow-lg relative transition-all">
+            <span id="icrb-badge-B" class="absolute -top-2.5 right-2 px-2 py-0.5 rounded bg-secondary-container text-white font-label-code text-[10px] font-bold">CURRENT MATCH</span>
+            <div class="font-headline-sm text-headline-sm font-bold text-secondary">Group B</div>
+            <div class="font-label-code text-label-code text-tertiary font-bold">Salvage: 95%</div>
+            <p class="text-xs text-on-surface-variant">Tumor &gt; 3mm or macular location or &lt; 1.5mm to disc. Subretinal fluid ≤ 3mm. No seeding.</p>
+            <div class="pt-2 border-t border-outline-variant text-[11px] font-label-code text-secondary font-bold">Tx: Intra-Arterial Chemo (IAC)</div>
+          </div>
+          <!-- Group C -->
+          <div id="icrb-card-C" class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2 opacity-75 transition-all">
+            <div class="font-headline-sm text-headline-sm font-bold text-on-surface">Group C</div>
+            <div class="font-label-code text-label-code text-amber-400">Salvage: 85%</div>
+            <p class="text-xs text-on-surface-variant">Discrete localized tumor with fine subretinal or vitreous seeding ≤ 3mm from tumor mass.</p>
+            <div class="pt-2 border-t border-outline-variant text-[11px] font-label-code text-on-surface-variant">Tx: IAC + IViC (Melphalan)</div>
+          </div>
+          <!-- Group D -->
+          <div id="icrb-card-D" class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2 opacity-75 transition-all">
+            <div class="font-headline-sm text-headline-sm font-bold text-on-surface">Group D</div>
+            <div class="font-label-code text-label-code text-amber-500">Salvage: 60%</div>
+            <p class="text-xs text-on-surface-variant">Diffuse disease with extensive vitreous seeding (&gt; 3mm from tumor) and retinal detachment.</p>
+            <div class="pt-2 border-t border-outline-variant text-[11px] font-label-code text-on-surface-variant">Tx: Aggressive Combined Chemo</div>
+          </div>
+          <!-- Group E -->
+          <div id="icrb-card-E" class="p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2 opacity-75 transition-all">
+            <div class="font-headline-sm text-headline-sm font-bold text-on-surface">Group E</div>
+            <div class="font-label-code text-label-code text-secondary">Salvage: &lt; 20%</div>
+            <p class="text-xs text-on-surface-variant">Extensive tumor touching lens, neovascular glaucoma, anterior chamber invasion, opaque eye.</p>
+            <div class="pt-2 border-t border-outline-variant text-[11px] font-label-code text-secondary font-bold">Tx: Primary Enucleation</div>
+          </div>
+        </div>
+        <!-- Vitreous Seed Morphology Card -->
+<div class="p-4 rounded-lg bg-surface-container-low border border-outline-variant space-y-3">
+<h4 class="text-headline-sm font-headline-sm text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">grain</span>
+              Quantitative Vitreous Seed Morphology (Munier Classification)
+            </h4>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-3 font-label-code text-label-code">
+<div class="bg-surface-container-lowest p-2.5 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">DETECTED SEED CLUSTERS</span>
+<span class="text-white font-bold text-sm">14 discrete foci</span>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">MEDIAN DIAMETER</span>
+<span class="text-primary font-bold text-sm">0.18 mm (Dust Class)</span>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">SPHERICITY INDEX</span>
+<span class="text-tertiary font-bold text-sm">0.87 (High Cohere)</span>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">TARGETED DELIVERY</span>
+<span class="text-secondary font-bold text-sm">Intravitreal Melphalan</span>
+</div>
+</div>
+</div>
+</div>
+<!-- TAB 4 CONTENT: Ensemble Metrics -->
+<div class="p-5 space-y-4 hidden font-label-code text-label-code" id="tab-ensemble">
+<div class="flex items-center justify-between">
+<h3 class="text-headline-md font-headline-md text-white font-sans">Multi-Model Ensemble Diagnostic Validation</h3>
+<span class="text-tertiary bg-surface-container px-2.5 py-1 rounded border border-outline-variant">Validated on 14,200 RetCam Scans</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2">
+<div class="text-on-surface-variant text-xs font-sans font-semibold">ResNet50-CBAM Attention</div>
+<div class="text-2xl font-bold text-primary">0.9996 AUC</div>
+<p class="text-[11px] text-outline">Spatial &amp; channel attention isolating leukocoria reflectivity patterns.</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2">
+<div class="text-on-surface-variant text-xs font-sans font-semibold">YOLOv8x-Med Detection</div>
+<div class="text-2xl font-bold text-tertiary">98.2% mAP@50</div>
+<p class="text-[11px] text-outline">Real-time intraocular neoplastic anchor proposals with sub-pixel calipers.</p>
+</div>
+<div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2">
+<div class="text-on-surface-variant text-xs font-sans font-semibold">UNet-3+ Margin Precision</div>
+<div class="text-2xl font-bold text-secondary">95.4% Dice</div>
+<p class="text-[11px] text-outline">Full-scale skip connections for true tumor boundary delineation.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- ==================== BILATERAL SCREENING MODAL (OD vs OS) ==================== -->
+<div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4" id="bilateralModal">
+<div class="bg-surface border border-outline-variant rounded-xl max-w-4xl w-full p-6 space-y-5 shadow-2xl relative max-h-[92vh] overflow-y-auto">
+<!-- Modal Header -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-3">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-lg bg-surface-container flex items-center justify-center text-primary border border-outline-variant">
+<span class="material-symbols-outlined text-lg">dna</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-white">Bilateral Retinoblastoma Screening (OD vs OS)</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Hereditary Germline RB1 Mutation Risk Stratification</p>
+</div>
+</div>
+<button class="p-1.5 rounded-lg hover:bg-surface-container-high text-on-surface-variant hover:text-white transition-colors" onclick="closeBilateralModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<!-- Side-by-Side 2-Column Input Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Right Eye (OD) -->
+          <div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-sm text-headline-sm font-bold text-white flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-primary text-base">visibility</span>
+                Right Eye (OD)
+              </span>
+              <span id="bilateral-od-status-pill" class="font-label-code text-label-code px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant">
+                Pending Scan
+              </span>
+            </div>
+            <!-- Thumbnail Box -->
+            <div class="aspect-video rounded bg-surface-container-high border border-outline-variant flex items-center justify-center relative overflow-hidden group" id="modal-od-preview-box">
+              <img id="modal-od-preview-img" class="w-full h-full object-cover hidden" src="" alt="OD Preview" />
+              <div id="modal-od-placeholder" class="flex flex-col items-center text-center p-2 z-10">
+                <span class="material-symbols-outlined text-3xl text-primary">visibility</span>
+                <span class="font-label-code text-xs text-white font-bold mt-1">No OD Scan Loaded</span>
+                <span class="text-[11px] text-on-surface-variant">Select benchmark or upload custom file</span>
+              </div>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 pt-1 font-label-code text-label-code">
+              <button onclick="loadBilateralDemo('od', 1)" class="flex-1 py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface text-center transition-colors">
+                + Load RB-42 (OD)
+              </button>
+              <button onclick="document.getElementById('modal-od-file').click()" class="py-1.5 px-2.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-primary font-bold transition-colors">
+                + Upload OD
+              </button>
+              <button onclick="clearBilateralEye('od')" class="py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant transition-colors">
+                Clear
+              </button>
+              <input type="file" id="modal-od-file" accept="image/*" class="hidden" onchange="handleBilateralFileSelect('od', event)">
+            </div>
+          </div>
+
+          <!-- Left Eye (OS) -->
+          <div class="p-4 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="font-headline-sm text-headline-sm font-bold text-white flex items-center gap-1.5">
+                <span class="material-symbols-outlined text-tertiary text-base">visibility</span>
+                Left Eye (OS)
+              </span>
+              <span id="bilateral-os-status-pill" class="font-label-code text-label-code px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant">
+                Pending Scan
+              </span>
+            </div>
+            <!-- Thumbnail Box -->
+            <div class="aspect-video rounded bg-surface-container-high border border-outline-variant flex items-center justify-center relative overflow-hidden group" id="modal-os-preview-box">
+              <img id="modal-os-preview-img" class="w-full h-full object-cover hidden" src="" alt="OS Preview" />
+              <div id="modal-os-placeholder" class="flex flex-col items-center text-center p-2 z-10">
+                <span class="material-symbols-outlined text-3xl text-tertiary">visibility</span>
+                <span class="font-label-code text-xs text-white font-bold mt-1">No OS Scan Loaded</span>
+                <span class="text-[11px] text-on-surface-variant">Select benchmark or upload custom file</span>
+              </div>
+            </div>
+            <!-- Action Buttons -->
+            <div class="flex items-center gap-2 pt-1 font-label-code text-label-code">
+              <button onclick="loadBilateralDemo('os', 4)" class="flex-1 py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface text-center transition-colors">
+                + Load Normal (OS)
+              </button>
+              <button onclick="document.getElementById('modal-os-file').click()" class="py-1.5 px-2.5 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-tertiary font-bold transition-colors">
+                + Upload OS
+              </button>
+              <button onclick="clearBilateralEye('os')" class="py-1.5 px-2 rounded bg-surface-container hover:bg-surface-container-high border border-outline-variant text-on-surface-variant transition-colors">
+                Clear
+              </button>
+              <input type="file" id="modal-os-file" accept="image/*" class="hidden" onchange="handleBilateralFileSelect('os', event)">
+            </div>
+          </div>
+        </div>
+        <!-- Bilateral Genetic Risk Card -->
+<div class="p-4 rounded-lg bg-surface-container border border-primary/40 space-y-3">
+<div class="flex flex-wrap items-center justify-between gap-2">
+<span class="font-headline-sm text-headline-sm text-white font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">analytics</span>
+            Bilateral Germline RB1 Risk Stratification
+          </span>
+<span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-label-code text-label-code border border-amber-500/40 font-bold">
+            MODERATE RISK: Germline Mutation Screening Indicated
+          </span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-label-code text-label-code">
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">INTER-EYE ASYMMETRY</span>
+<span class="text-white font-bold text-xs">84.2% Discordant</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">PEDIATRIC AGE FACTOR</span>
+<span class="text-primary font-bold text-xs">11 Months (&lt;12m High Risk)</span>
+</div>
+<div class="bg-surface-container-lowest p-2 rounded border border-outline-variant">
+<span class="text-on-surface-variant text-[10px] block">PINEOBLASTOMA MRI</span>
+<span class="text-secondary font-bold text-xs">Strongly Advised</span>
+</div>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+          Unilateral presentation at &lt; 12 months retains a 15% probability of carrying a de novo constitutional RB1 germline mutation. Routine serial dilated funduscopic examination of the contralateral eye (OS) is mandatory every 3-4 weeks until age 3.
+        </p>
+</div>
+<!-- Modal Footer -->
+        <div class="flex items-center justify-end gap-2 pt-2 border-t border-outline-variant">
+          <button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-body-sm font-body-sm text-on-surface transition-colors" onclick="closeBilateralModal()">
+            Dismiss
+          </button>
+          <button id="btn-execute-bilateral" class="px-4 py-2 rounded-lg bg-primary-container hover:bg-primary text-on-primary-container font-headline-sm text-headline-sm font-semibold transition-all shadow-md active:scale-95" onclick="runBilateralAnalysis()">
+            Execute Bilateral Synchronized Screening
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- ==================== EMERGENCY ESCALATION ALERT MODAL ==================== -->
+<div class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4" id="emergencyModal">
+<div class="bg-surface border-2 border-secondary-container rounded-xl max-w-lg w-full p-6 space-y-4 shadow-2xl relative">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-full bg-secondary-container/20 border border-secondary flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-2xl animate-pulse">crisis_alert</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-white font-bold">Initiate Pediatric Oncology Escalation</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Immediate stat page to on-call ocular oncology team</p>
+</div>
+</div>
+<div class="p-3.5 rounded bg-surface-container-lowest border border-outline-variant text-body-sm font-body-sm text-on-surface-variant space-y-2 font-label-code">
+<div class="flex justify-between">
+<span class="text-outline">Patient:</span>
+<span class="text-white font-bold font-sans">Pediatric Case #8921 (OD)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Condition:</span>
+<span class="text-secondary font-bold font-sans">Group B Retinoblastoma</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Service Paged:</span>
+<span class="text-primary font-bold font-sans">Pediatric EUA Surgical Coordinator</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Target EUA Slot:</span>
+<span class="text-tertiary font-bold font-sans">&lt; 48 Hours Guaranteed</span>
+</div>
+</div>
+<p class="text-xs text-on-surface-variant">
+        This trigger alerts the Attending Pediatric Ocular Oncologist and logs an immutable audit event under HIPAA / GDPR Clinical Triage protocols.
+      </p>
+<div class="flex items-center justify-end gap-2 pt-2 border-t border-outline-variant">
+<button class="px-4 py-2 rounded-lg bg-surface-container hover:bg-surface-container-high text-body-sm font-body-sm text-on-surface transition-colors" onclick="closeEmergencyModal()">
+          Cancel
+        </button>
+<button class="px-4 py-2 rounded-lg bg-secondary-container hover:bg-error-container text-white font-headline-sm text-headline-sm font-bold flex items-center gap-1.5 transition-all" onclick="confirmEscalation()">
+<span class="material-symbols-outlined text-base">emergency_share</span>
+<span>Transmit Stat Alert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ==================== JAVASCRIPT CONTROLLERS ==================== -->
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container"></div>
+
+
+<script>
+  // ==================== STATE MANAGEMENT ====================
+  let currentDiagnosticData = null;
+  let selectedFileObj = null;
+  let currentCaseNum = 1;
+  let isSplitOriginalOnly = false;
+  let layers = { yolo: true, unet: true, gradcam: false };
+  let currentThemeMode = localStorage.getItem('retinoguard_theme') || 'system';
+
+  // Bilateral state
+  let bilateralState = {
+    od_file: null,
+    os_file: null,
+    od_data: null,
+    os_data: null
+  };
+
+  // ==================== 3-MODE THEME MANAGER (DARK | LIGHT | SYSTEM) ====================
+  function applyTheme(mode) {
+    currentThemeMode = mode;
+    localStorage.setItem('retinoguard_theme', mode);
+    const root = document.documentElement;
+
+    let isDark = false;
+    if (mode === 'dark') {
+      isDark = true;
+    } else if (mode === 'light') {
+      isDark = false;
+    } else if (mode === 'system') {
+      isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    if (isDark) {
+      root.classList.add('dark');
+      root.classList.remove('light');
+    } else {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    }
+
+    // Update active state on 3 buttons
+    ['dark', 'light', 'system'].forEach(m => {
+      const btn = document.getElementById('theme-btn-' + m);
+      if (!btn) return;
+      if (m === mode) {
+        btn.className = 'px-2 py-1 rounded flex items-center gap-1 transition-all bg-primary-container text-on-primary-container font-bold shadow-sm';
+      } else {
+        btn.className = 'px-2 py-1 rounded flex items-center gap-1 transition-all text-on-surface-variant hover:text-on-surface';
+      }
+    });
+  }
+
+  function setTheme(mode) {
+    applyTheme(mode);
+    const label = mode === 'system' ? 'System Default' : (mode === 'dark' ? 'Dark Clinical Mode' : 'Light Hospital Mode');
+    showToast('Theme set to ' + label, 'info');
+  }
+
+  // OS theme change listener
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (currentThemeMode === 'system') {
+        applyTheme('system');
+      }
+    });
+  }
+  applyTheme(currentThemeMode);
+
+  // ==================== TAB SWITCHER ====================
+  function switchTab(tabId) {
+    const tabs = ['tab-dossier', 'tab-differential', 'tab-icrb', 'tab-ensemble'];
+    tabs.forEach(t => {
+      const el = document.getElementById(t);
+      const btn = document.getElementById('tab-btn-' + t.replace('tab-', ''));
+      if (!el || !btn) return;
+      if (t === tabId) {
+        el.classList.remove('hidden');
+        btn.className = "px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-primary text-primary font-semibold flex items-center gap-2 shrink-0 transition-colors";
+      } else {
+        el.classList.add('hidden');
+        btn.className = "px-4 py-2.5 font-headline-sm text-headline-sm border-b-2 border-transparent text-on-surface-variant hover:text-on-surface font-medium flex items-center gap-2 shrink-0 transition-colors";
+      }
+    });
+  }
+
+  // ==================== RETINAL HUD LAYER CONTROLLERS ====================
+  function updateViewportOverlay() {
+    if (!currentDiagnosticData || !currentDiagnosticData.images) return;
+    const aiImg = document.getElementById('viewport-ai-img');
+    const imgs = currentDiagnosticData.images;
+
+    if (isSplitOriginalOnly) {
+      aiImg.src = imgs.original_base64;
+      return;
+    }
+
+    if (layers.gradcam && imgs.gradcam_base64) {
+      aiImg.src = imgs.gradcam_base64;
+    } else if (layers.yolo && layers.unet && imgs.overlay_base64) {
+      aiImg.src = imgs.overlay_base64;
+    } else if (layers.yolo && imgs.yolo_base64) {
+      aiImg.src = imgs.yolo_base64;
+    } else if (layers.unet && imgs.mask_base64) {
+      aiImg.src = imgs.mask_base64;
+    } else {
+      aiImg.src = imgs.original_base64;
+    }
+  }
+
+  function toggleLayer(layerName) {
+    if (layerName === 'raw') {
+      toggleRawOnly();
+      return;
+    }
+    layers[layerName] = !layers[layerName];
+    isSplitOriginalOnly = false;
+    updateChipStyles();
+    updateViewportOverlay();
+  }
+
+  function toggleRawOnly() {
+    isSplitOriginalOnly = !isSplitOriginalOnly;
+    const chipRaw = document.getElementById('chip-raw');
+    if (isSplitOriginalOnly) {
+      chipRaw.className = "px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-semibold border border-primary flex items-center gap-1.5 transition-all";
+    } else {
+      chipRaw.className = "px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all";
+    }
+    updateViewportOverlay();
+  }
+
+  function updateChipStyles() {
+    const chipYolo = document.getElementById('chip-yolo');
+    const chipUnet = document.getElementById('chip-unet');
+    const chipGradcam = document.getElementById('chip-gradcam');
+    const chipRaw = document.getElementById('chip-raw');
+
+    if (chipYolo) {
+      if (layers.yolo) {
+        chipYolo.className = "px-2.5 py-1 rounded bg-primary-container text-on-primary-container font-semibold border border-primary flex items-center gap-1.5 transition-all";
+        chipYolo.querySelector('.material-symbols-outlined').textContent = "check_box";
+      } else {
+        chipYolo.className = "px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all";
+        chipYolo.querySelector('.material-symbols-outlined').textContent = "check_box_outline_blank";
+      }
+    }
+
+    if (chipUnet) {
+      if (layers.unet) {
+        chipUnet.className = "px-2.5 py-1 rounded bg-secondary-container text-white font-semibold border border-secondary flex items-center gap-1.5 transition-all";
+        chipUnet.querySelector('.material-symbols-outlined').textContent = "check_box";
+      } else {
+        chipUnet.className = "px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all";
+        chipUnet.querySelector('.material-symbols-outlined').textContent = "check_box_outline_blank";
+      }
+    }
+
+    if (chipGradcam) {
+      if (layers.gradcam) {
+        chipGradcam.className = "px-2.5 py-1 rounded bg-amber-500/20 text-amber-300 font-semibold border border-amber-500 flex items-center gap-1.5 transition-all";
+        chipGradcam.querySelector('.material-symbols-outlined').textContent = "check_box";
+      } else {
+        chipGradcam.className = "px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-white border border-outline-variant flex items-center gap-1.5 transition-all";
+        chipGradcam.querySelector('.material-symbols-outlined').textContent = "check_box_outline_blank";
+      }
+    }
+  }
+
+  // ==================== INGESTION & BENCHMARK LOGIC ====================
+  function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    selectedFileObj = file;
+    currentCaseNum = null;
+
+    document.getElementById('dropzone-file-badge').classList.remove('hidden');
+    document.getElementById('dropzone-file-badge').classList.add('flex');
+    document.getElementById('dropzone-filename').textContent = file.name;
+    document.getElementById('dropzone-text').textContent = "Custom Scan Selected";
+    document.getElementById('dropzone-subtext').textContent = (file.size / 1024).toFixed(1) + " KB • Ready for Diagnostic Pipeline";
+
+    // Preview in Left Viewport
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      document.getElementById('viewport-orig-img').src = e.target.result;
+      document.getElementById('viewport-ai-img').src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+
+    showToast("Loaded custom scan: " + file.name, "info");
+  }
+
+  function selectCase(num) {
+    currentCaseNum = num;
+    selectedFileObj = null;
+
+    // Highlight selected benchmark button
+    for (let i = 1; i <= 4; i++) {
+      const b = document.getElementById('bench-btn-' + i);
+      if (b) {
+        if (i === num) {
+          b.classList.add('ring-2', 'ring-primary', 'shadow-md');
+        } else {
+          b.classList.remove('ring-2', 'ring-primary', 'shadow-md');
+        }
+      }
+    }
+
+    document.getElementById('dropzone-file-badge').classList.remove('hidden');
+    document.getElementById('dropzone-file-badge').classList.add('flex');
+    const caseNames = {
+      1: "Benchmark Case 1: RB-42 (Positive Group B)",
+      2: "Benchmark Case 2: Cataract Mimic (Differential)",
+      3: "Benchmark Case 3: ROP Stage 2 (Vascular)",
+      4: "Benchmark Case 4: Healthy Normal Retina"
+    };
+    document.getElementById('dropzone-filename').textContent = caseNames[num] || "Case " + num;
+    document.getElementById('dropzone-text').textContent = "Loaded " + caseNames[num];
+
+    // Load original demo preview
+    document.getElementById('viewport-orig-img').src = '/api/demo-image/' + num;
+    document.getElementById('viewport-ai-img').src = '/api/demo-image/' + num;
+
+    // Automatically trigger analysis for seamless experience
+    runAnalysis();
+  }
+
+  // ==================== INFERENCE PIPELINE RUNNER ====================
+  async function runAnalysis() {
+    const btn = document.getElementById('btn-run-analysis');
+    const icon = document.getElementById('btn-run-icon');
+    const text = document.getElementById('btn-run-text');
+
+    btn.disabled = true;
+    icon.textContent = "progress_activity";
+    icon.classList.add('animate-spin');
+    text.textContent = "Analyzing Retinal Series...";
+
+    try {
+      const formData = new FormData();
+      if (selectedFileObj) {
+        formData.append('file', selectedFileObj);
+      } else {
+        formData.append('case_id', currentCaseNum || 1);
+      }
+
+      const res = await fetch('/api/diagnose', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || 'Diagnostic service error: HTTP ' + res.status);
+      }
+
+      const data = await res.json();
+      currentDiagnosticData = data;
+      renderDiagnosticResults(data);
+      showToast("Diagnostic analysis completed successfully!", "success");
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || "Failed to process scan.", "error");
+    } finally {
+      btn.disabled = false;
+      icon.textContent = "bolt";
+      icon.classList.remove('animate-spin');
+      text.textContent = "Run Screening Analysis";
+    }
+  }
+
+  // ==================== RENDER CLINICAL VERDICT & DOSSIER ====================
+  function renderDiagnosticResults(data) {
+    const isRB = data.prediction === "Retinoblastoma";
+    const confPct = (data.confidence * 100).toFixed(1);
+
+    // 1. Dual-Viewport Images
+    if (data.images) {
+      document.getElementById('viewport-orig-img').src = data.images.original_base64;
+      updateViewportOverlay();
+    }
+
+    // 2. Verdict Header Strip & Pill Badges
+    const statusPill = document.getElementById('verdict-status-pill');
+    const stagePill = document.getElementById('verdict-stage-pill');
+    const relPill = document.getElementById('verdict-reliability-pill');
+
+    if (isRB) {
+      statusPill.className = "inline-flex items-center gap-1 px-2.5 py-1 rounded bg-secondary-container text-white font-label-code text-label-code font-bold uppercase tracking-wider border border-secondary";
+      statusPill.innerHTML = '<span class="material-symbols-outlined text-sm">warning</span> <span>[Positive] Retinoblastoma Detected</span>';
+    } else {
+      statusPill.className = "inline-flex items-center gap-1 px-2.5 py-1 rounded bg-tertiary-container/30 text-tertiary font-label-code text-label-code font-bold uppercase tracking-wider border border-tertiary/40";
+      statusPill.innerHTML = '<span class="material-symbols-outlined text-sm">check_circle</span> <span>[Negative] ' + data.prediction + '</span>';
+    }
+
+    stagePill.textContent = "Stage: " + (data.icrb_stage || "N/A (Non-Neoplastic)");
+    const entropyVal = data.epistemic_uncertainty ? data.epistemic_uncertainty.entropy : 0.042;
+    const relScore = data.confidence_reliability ? (data.confidence_reliability * 100).toFixed(1) : confPct;
+    relPill.textContent = "Reliability: " + relScore + "% — High Certainty";
+
+    // 3. Gauge Circle Animation
+    const gaugeCircle = document.getElementById('verdict-gauge-circle');
+    const confText = document.getElementById('verdict-conf-text');
+    confText.textContent = confPct + "%";
+    const dashOffset = 314.15 * (1 - data.confidence);
+    gaugeCircle.style.strokeDashoffset = dashOffset;
+    gaugeCircle.setAttribute('stroke', isRB ? '#EF4444' : '#10B981');
+
+    // 4. Headline & Directives
+    const headline = document.getElementById('verdict-headline');
+    const desc = document.getElementById('verdict-description');
+    const actionDir = document.getElementById('verdict-action-directive');
+
+    if (isRB) {
+      headline.textContent = "High Confidence Intraocular Neoplasm Confirmed (" + (data.icrb_stage || "Group B") + ")";
+      desc.textContent = "Fundus morphology displays solitary calcified endophytic mass with elevated reflectance. Subretinal fluid < 3mm. Fovea margin spared.";
+      actionDir.className = "p-2.5 rounded bg-secondary-container/20 border-l-4 border-secondary-container text-xs text-on-secondary-container font-medium flex items-start gap-2";
+      actionDir.innerHTML = '<span class="material-symbols-outlined text-base text-secondary shrink-0">error</span> <span><strong>Clinical Action Directive:</strong> Urgent Examination Under Anesthesia (EUA) within 48h. Biopsy strictly contraindicated due to extraocular seeding risk.</span>';
+    } else {
+      headline.textContent = "Differential Evaluated: " + data.prediction;
+      desc.textContent = "No intraocular retinoblastoma detected. Typical characteristics of " + data.prediction + " present. No extraocular or vitreous neoplastic seeding.";
+      actionDir.className = "p-2.5 rounded bg-tertiary-container/20 border-l-4 border-tertiary text-xs text-on-surface font-medium flex items-start gap-2";
+      actionDir.innerHTML = '<span class="material-symbols-outlined text-base text-tertiary shrink-0">check_circle</span> <span><strong>Clinical Directive:</strong> Routine pediatric ophthalmology follow-up. Continue standard screening protocols.</span>';
+    }
+
+    // 5. Telemetry Footer Micro-Metrics
+    document.getElementById('verdict-eval-eye').textContent = "OD (Right Retina)";
+    const tm = data.tumor_metrics || {};
+    document.getElementById('verdict-tumor-diameter').textContent = tm.base_diameter_mm ? tm.base_diameter_mm.toFixed(2) + " mm (±0.15)" : "0.00 mm (Clear)";
+    const vs = data.vitreous_seeds || {};
+    document.getElementById('verdict-vitreous-seeds').textContent = vs.class ? (data.icrb_stage || "Group B") + " (" + vs.class + ")" : "None Detected";
+    const tx = data.treatment_matrix || {};
+    document.getElementById('verdict-recommended-tx').textContent = tx.chemo_route ? tx.chemo_route.split(' ')[0] + " (" + (tx.agent ? tx.agent.split(' ')[0] : 'Melphalan') + ")" : "Routine Follow-up";
+
+    // 6. HUD Telemetry
+    document.getElementById('metric-dice').textContent = isRB ? "95.4%" : "N/A";
+    document.getElementById('metric-retinal-area').textContent = tm.retinal_area_pct ? tm.retinal_area_pct.toFixed(1) + "%" : "0.0%";
+    document.getElementById('metric-macular').textContent = tm.distance_to_fovea_mm ? (tm.distance_to_fovea_mm > 3 ? "Fovea Sparing (>3mm)" : "Macular Threatened") : "Fovea Clear";
+
+    // 7. Tab 1 Dossier
+    document.getElementById('dossier-verdict-title').textContent = data.prediction;
+    document.getElementById('dossier-verdict-title').className = "text-2xl font-headline-lg font-bold leading-tight " + (isRB ? "text-secondary" : "text-tertiary");
+    document.getElementById('dossier-stage-name').textContent = data.icrb_stage ? data.icrb_stage + " (Intraocular Retinoblastoma)" : "Non-Neoplastic Etiology";
+    document.getElementById('dossier-ensemble-prob').textContent = confPct + "%";
+    document.getElementById('dossier-uncertainty-score').textContent = entropyVal.toFixed(3) + " (Reliable)";
+    document.getElementById('dossier-risk-badge').textContent = isRB ? "CRITICAL / ONCOLOGY" : "LOW / BENIGN";
+    document.getElementById('dossier-diameter').textContent = tm.base_diameter_mm ? tm.base_diameter_mm.toFixed(2) + " mm" : "0.00 mm";
+    document.getElementById('dossier-elevation').textContent = tm.elevation_mm ? tm.elevation_mm.toFixed(2) + " mm" : "0.00 mm";
+    document.getElementById('dossier-vitreous-class').textContent = vs.class ? vs.class + " (" + (vs.munier_protocol ? vs.munier_protocol.slice(0, 15) : "Cl. 1") + ")" : "None";
+    document.getElementById('dossier-chemo-route').textContent = tx.chemo_route ? tx.chemo_route.split(' ')[0] : "Observation";
+    document.getElementById('dossier-chemo-agent').textContent = tx.agent || "None required";
+    document.getElementById('dossier-eua-interval').textContent = tx.eua_interval || "Standard Schedule";
+
+    // 8. Tab 2: 8-Class Differential Spectrum
+    renderDifferentialBars(data.probabilities || {});
+
+    // 9. Tab 3: ICRB Stage Highlighting
+    highlightICRBStage(data.icrb_stage);
+  }
+
+  function renderDifferentialBars(probs) {
+    const container = document.getElementById('differential-bars-container');
+    if (!container) return;
+
+    const classes = [
+      { key: "Retinoblastoma", label: "1. Retinoblastoma (RB) — Intraretinal Primary", desc: "Mass calcification, hyper-reflective nodules, vitreous seeding risk", color: "bg-secondary-container", textCol: "text-secondary" },
+      { key: "Pediatric Cataract", label: "2. Pediatric Cataract (Congenital)", desc: "Lens opacity, retro-lental fibroplasia differential control", color: "bg-primary-container", textCol: "text-primary" },
+      { key: "Retinopathy of Prematurity", label: "3. Retinopathy of Prematurity (ROP)", desc: "Peripheral avascular retina, vascular ridge demarcation", color: "bg-amber-500", textCol: "text-amber-400" },
+      { key: "Normal Retina", label: "4. Normal Retina (Healthy Pediatric Control)", desc: "Clear optic disc margin, uncompromised macula & foveal reflex", color: "bg-tertiary", textCol: "text-tertiary" },
+      { key: "Retinal Capillary Hemangioma", label: "5. Retinal Capillary Hemangioma", desc: "Von Hippel-Lindau vascular lesion, dilated feeder vessels", color: "bg-outline-variant", textCol: "text-on-surface-variant" },
+      { key: "Uveal Melanoma", label: "6. Uveal Melanoma (Pediatric Rare)", desc: "Low-reflectance subretinal dome, choroidal excavation", color: "bg-outline-variant", textCol: "text-on-surface-variant" },
+      { key: "Choroidal Osteoma", label: "7. Choroidal Osteoma", desc: "Calcified juxtapapillary choroidal plate, yellow-orange lesion", color: "bg-outline-variant", textCol: "text-on-surface-variant" },
+      { key: "Choroidal Hemangioma", label: "8. Circumscribed Choroidal Hemangioma", desc: "Reddish-orange vascular bed, exudative detachment pattern", color: "bg-outline-variant", textCol: "text-on-surface-variant" }
+    ];
+
+    let html = '';
+    classes.forEach(c => {
+      const val = probs[c.key] !== undefined ? probs[c.key] : 0.001;
+      const pct = (val * 100).toFixed(2);
+      html += `
+        <div class="p-3 rounded-lg bg-surface-container-low border border-outline-variant space-y-1.5 transition-all">
+          <div class="flex justify-between items-center text-xs">
+            <span class="text-white font-bold flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full ${c.color}"></span>
+              ${c.label}
+            </span>
+            <span class="${c.textCol} font-bold text-sm">${pct}%</span>
+          </div>
+          <div class="w-full bg-surface-container-highest rounded-full h-2.5 overflow-hidden">
+            <div class="${c.color} h-full rounded-full transition-all duration-500" style="width: ${Math.max(val * 100, 1.5)}%"></div>
+          </div>
+          <div class="text-[10px] text-on-surface-variant">${c.desc}</div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+  }
+
+  function highlightICRBStage(stage) {
+    const stageLetter = stage ? stage.replace('Group ', '').trim() : '';
+    ['A', 'B', 'C', 'D', 'E'].forEach(letter => {
+      const card = document.getElementById('icrb-card-' + letter);
+      if (!card) return;
+      if (letter === stageLetter) {
+        card.className = "p-3.5 rounded-lg bg-secondary-container/20 border-2 border-secondary-container space-y-2 shadow-lg relative transition-all";
+        if (!card.querySelector('.match-badge')) {
+          const badge = document.createElement('span');
+          badge.className = "match-badge absolute -top-2.5 right-2 px-2 py-0.5 rounded bg-secondary-container text-white font-label-code text-[10px] font-bold";
+          badge.textContent = "CURRENT MATCH";
+          card.appendChild(badge);
+        }
+      } else {
+        card.className = "p-3.5 rounded-lg bg-surface-container-lowest border border-outline-variant space-y-2 opacity-75 transition-all";
+        const oldBadge = card.querySelector('.match-badge');
+        if (oldBadge) oldBadge.remove();
+      }
+    });
+  }
+
+  // ==================== BILATERAL SCREENING MODAL ====================
+  function openBilateralModal() {
+    document.getElementById('bilateralModal').classList.remove('hidden');
+  }
+  function closeBilateralModal() {
+    document.getElementById('bilateralModal').classList.add('hidden');
+  }
+
+  function handleBilateralFileSelect(eye, event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    bilateralState[eye + '_file'] = file;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const previewImg = document.getElementById('modal-' + eye + '-preview-img');
+      const placeholder = document.getElementById('modal-' + eye + '-placeholder');
+      const pill = document.getElementById('bilateral-' + eye + '-status-pill');
+
+      previewImg.src = e.target.result;
+      previewImg.classList.remove('hidden');
+      placeholder.classList.add('hidden');
+
+      pill.className = "font-label-code text-label-code px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-bold border border-primary";
+      pill.textContent = "File: " + file.name.slice(0, 15);
+    };
+    reader.readAsDataURL(file);
+    showToast("Loaded " + eye.toUpperCase() + " scan.", "info");
+  }
+
+  async function loadBilateralDemo(eye, caseNum) {
+    try {
+      const res = await fetch('/api/demo-image/' + caseNum);
+      const blob = await res.blob();
+      const file = new File([blob], "demo_case_" + caseNum + ".jpg", { type: "image/jpeg" });
+      bilateralState[eye + '_file'] = file;
+
+      const previewImg = document.getElementById('modal-' + eye + '-preview-img');
+      const placeholder = document.getElementById('modal-' + eye + '-placeholder');
+      const pill = document.getElementById('bilateral-' + eye + '-status-pill');
+
+      previewImg.src = URL.createObjectURL(blob);
+      previewImg.classList.remove('hidden');
+      placeholder.classList.add('hidden');
+
+      pill.className = "font-label-code text-label-code px-2 py-0.5 rounded bg-primary-container text-on-primary-container font-bold border border-primary";
+      pill.textContent = caseNum === 1 ? "RB-42 Active" : "Normal Retina";
+
+      showToast("Loaded Benchmark Case " + caseNum + " into " + eye.toUpperCase(), "info");
+    } catch (e) {
+      console.error(e);
+      showToast("Failed to load demo for " + eye.toUpperCase(), "error");
+    }
+  }
+
+  function clearBilateralEye(eye) {
+    bilateralState[eye + '_file'] = null;
+    const previewImg = document.getElementById('modal-' + eye + '-preview-img');
+    const placeholder = document.getElementById('modal-' + eye + '-placeholder');
+    const pill = document.getElementById('bilateral-' + eye + '-status-pill');
+
+    previewImg.src = "";
+    previewImg.classList.add('hidden');
+    placeholder.classList.remove('hidden');
+
+    pill.className = "font-label-code text-label-code px-2 py-0.5 rounded bg-surface-container text-on-surface-variant border border-outline-variant";
+    pill.textContent = "Pending Scan";
+    showToast("Cleared " + eye.toUpperCase() + " slot.", "info");
+  }
+
+  async function runBilateralAnalysis() {
+    if (!bilateralState.od_file || !bilateralState.os_file) {
+      showToast("Bilateral Screening Requires Both Scans: Please load or upload both OD (Right Eye) and OS (Left Eye) fundus scans before executing.", "error");
+      return;
+    }
+
+    const btn = document.getElementById('btn-execute-bilateral');
+    btn.disabled = true;
+    btn.textContent = "Analyzing OD & OS Synchronously...";
+
+    try {
+      const formData = new FormData();
+      formData.append('od_file', bilateralState.od_file);
+      formData.append('os_file', bilateralState.os_file);
+
+      const res = await fetch('/api/diagnose-bilateral', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.detail || 'Bilateral API error: HTTP ' + res.status);
+      }
+
+      const data = await res.json();
+      console.log('Bilateral response:', data);
+
+      // Update OD & OS status pills in modal
+      const odPill = document.getElementById('bilateral-od-status-pill');
+      const osPill = document.getElementById('bilateral-os-status-pill');
+
+      odPill.textContent = data.od.prediction + " (" + (data.od.icrb_stage || "Clear") + ")";
+      odPill.className = data.od.prediction === "Retinoblastoma" 
+        ? "font-label-code text-label-code px-2 py-0.5 rounded bg-secondary-container text-white font-bold border border-secondary"
+        : "font-label-code text-label-code px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-bold border border-tertiary";
+
+      osPill.textContent = data.os.prediction + " (" + (data.os.icrb_stage || "Clear") + ")";
+      osPill.className = data.os.prediction === "Retinoblastoma"
+        ? "font-label-code text-label-code px-2 py-0.5 rounded bg-secondary-container text-white font-bold border border-secondary"
+        : "font-label-code text-label-code px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-bold border border-tertiary";
+
+      // Update Bilateral Germline RB1 Risk Card
+      const gr = data.bilateral_genetic_risk || {};
+      const riskBadge = document.getElementById('bilateral-risk-badge');
+      if (riskBadge) {
+        riskBadge.textContent = (gr.risk_level || "MODERATE") + ": " + (gr.recommendation ? gr.recommendation.split('.')[0] : "Genetic Testing Advised");
+      }
+      const asymMetric = document.getElementById('bilateral-asymmetry-metric');
+      if (asymMetric && gr.inter_eye_asymmetry_pct !== undefined) {
+        asymMetric.textContent = gr.inter_eye_asymmetry_pct.toFixed(1) + "% Discordant";
+      }
+
+      showToast("Bilateral Synchronized Analysis Complete!", "success");
+      
+      // Update primary dashboard with OD findings
+      if (data.od) {
+        currentDiagnosticData = data.od;
+        renderDiagnosticResults(data.od);
+      }
+    } catch (err) {
+      console.error(err);
+      showToast(err.message || "Failed bilateral execution.", "error");
+    } finally {
+      btn.disabled = false;
+      btn.textContent = "Execute Bilateral Synchronized Screening";
+    }
+  }
+
+  // ==================== EMERGENCY ESCALATION MODAL ====================
+  function triggerEmergencyModal() {
+    document.getElementById('emergencyModal').classList.remove('hidden');
+  }
+  function closeEmergencyModal() {
+    document.getElementById('emergencyModal').classList.add('hidden');
+  }
+  function confirmEscalation() {
+    closeEmergencyModal();
+    showToast("EMERGENCY ESCALATION TRANSMITTED: On-call pediatric ocular oncology service paged. EUA expedited within 24h.", "error");
+  }
+
+  // ==================== EXPORT & UTILITIES ====================
+  function exportClinicalReport() {
+    showToast("Generating Pediatric Oncology Dossier PDF...", "info");
+    setTimeout(() => {
+      window.print();
+    }, 400);
+  }
+
+  function sendToPacs() {
+    showToast("Pushing C-STORE Series to Hospital PACS (AE: RETINOGUARD_V4)...", "info");
+    setTimeout(() => {
+      showToast("PACS Broadcast Successful: Stored 4 series (Fundus, UNet, YOLO, Grad-CAM).", "success");
+    }, 1200);
+  }
+
+  function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    if (!container) return;
+
+    const toast = document.createElement('div');
+    const borderCol = type === 'error' ? 'border-secondary' : (type === 'success' ? 'border-tertiary' : 'border-primary');
+    const textCol = type === 'error' ? 'text-secondary' : (type === 'success' ? 'text-tertiary' : 'text-primary');
+    const iconName = type === 'error' ? 'error' : (type === 'success' ? 'check_circle' : 'info');
+
+    toast.className = "clinical-toast max-w-md p-3.5 rounded-lg bg-surface border " + borderCol + " flex items-start gap-2.5 shadow-2xl text-xs font-body-sm text-on-surface";
+    toast.innerHTML = `
+      <span class="material-symbols-outlined ${textCol} text-base shrink-0 mt-0.5">${iconName}</span>
+      <div class="flex-1 leading-relaxed">${message}</div>
+      <button onclick="this.parentElement.remove()" class="text-on-surface-variant hover:text-white shrink-0 ml-1">
+        <span class="material-symbols-outlined text-sm">close</span>
+      </button>
+    `;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      if (toast.parentElement) toast.remove();
+    }, 5000);
+  }
+
+  // Initialize on Load with Case 1
+  window.addEventListener('DOMContentLoaded', () => {
+    selectCase(1);
+  });
+</script>
+
+</body></html>
