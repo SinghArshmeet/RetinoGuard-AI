@@ -350,13 +350,13 @@
 <div class="text-body-sm font-body-sm text-on-surface-variant">Pediatric Ocular Oncology</div>
 </div>
 <!-- Ingest DICOM Series CTA Button -->
-<button class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold hover:bg-primary transition-all active:scale-[0.98]" onclick="document.getElementById('file-input').click()">
+<button class="w-full flex items-center justify-center gap-2 py-2 px-3 rounded-lg bg-primary-container text-on-primary-container font-headline-sm text-headline-sm font-semibold hover:bg-primary transition-all active:scale-[0.98]" onclick="document.getElementById('scan-file-input').click()">
 <span class="material-symbols-outlined text-lg">cloud_upload</span>
 <span>Ingest DICOM Series</span>
 </button>
 <!-- Navigation Tabs list -->
 <nav class="space-y-1">
-<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-high text-primary border-l-2 border-primary font-medium text-body-sm font-body-sm" href="javascript:void(0)" onclick="document.getElementById('file-input').click()">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-surface-container-high text-primary border-l-2 border-primary font-medium text-body-sm font-body-sm" href="javascript:void(0)" onclick="document.getElementById('scan-file-input').click()">
 <span class="material-symbols-outlined text-lg">upload_file</span>
 <span>Live Ingestion</span>
 </a>
@@ -1170,14 +1170,14 @@
 <span class="material-symbols-outlined text-primary text-base">analytics</span>
             Bilateral Germline RB1 Risk Stratification
           </span>
-<span class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-label-code text-label-code border border-amber-500/40 font-bold">
+<span id="bilateral-risk-badge" class="px-2.5 py-0.5 rounded bg-amber-500/20 text-amber-400 font-label-code text-label-code border border-amber-500/40 font-bold">
             MODERATE RISK: Germline Mutation Screening Indicated
           </span>
 </div>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-label-code text-label-code">
 <div class="bg-surface-container-lowest p-2 rounded border border-outline-variant">
 <span class="text-on-surface-variant text-[10px] block">INTER-EYE ASYMMETRY</span>
-<span class="text-white font-bold text-xs">84.2% Discordant</span>
+<span id="bilateral-asymmetry-metric" class="text-white font-bold text-xs">84.2% Discordant</span>
 </div>
 <div class="bg-surface-container-lowest p-2 rounded border border-outline-variant">
 <span class="text-on-surface-variant text-[10px] block">PEDIATRIC AGE FACTOR</span>
