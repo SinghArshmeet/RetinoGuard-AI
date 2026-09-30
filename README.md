@@ -154,8 +154,6 @@ The International Classification for Retinoblastoma (Murphree et al.) is impleme
 
 ```text
 RetinoGuard-AI/
-├── archive/                                   # Archived project assets & initial design exports
-│   └── Final_UI_Stitch_Export.zip
 ├── checkpoints/                               # Trained Deep Learning Model Weights
 │   ├── rb_detector_resnet_cbam_best_fold_0.pt # Primary Detector Fold 0 (Sens: 98.9%)
 │   ├── rb_detector_resnet_cbam_best_fold_1.pt # Primary Detector Fold 1 (Sens: 99.9%)
