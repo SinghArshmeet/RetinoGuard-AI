@@ -1,9 +1,0 @@
-Subsystem,Architecture,Primary_Metric,Score_Pct,Target_Pct,Status
-Primary Retinoblastoma Detector,ResNet-18 + CBAM,Sensitivity (Recall),99.69,98.0,EXCEEDED
-Malignancy Discrimination,ResNet-18 + CBAM,Specificity,96.62,92.0,EXCEEDED
-ROC Discriminative Power,ResNet-18 + CBAM,ROC-AUC,99.96,95.0,EXCEEDED
-8-Class Differential Classifier,Dual-Head ResNet-CBAM,Diagnostic Accuracy,93.98,90.0,EXCEEDED
-Tumor Spatial Localization,YOLOv8 Nano,mAP50,94.2,85.0,EXCEEDED
-Tumor Lesion Recall,YOLOv8 Nano,Lesion Recall,85.71,80.0,EXCEEDED
-Boundary Segmentation,Attention U-Net,Dice Similarity,95.42,90.0,EXCEEDED
-ICRB Staging Engine,Murphree Expert Rules,Staging Concordance,100.0,100.0,OPERATIONAL

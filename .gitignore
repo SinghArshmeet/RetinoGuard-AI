@@ -86,3 +86,8 @@ data/processed/
 
 # Large Model Weights (>100MB exceeds GitHub hard limit; use Git LFS or release assets)
 checkpoints/rb_attention_unet_best.pt
+
+# Orange Data Mining local analysis files
+results/orange/
+export_orange_stats.py
+*.tab

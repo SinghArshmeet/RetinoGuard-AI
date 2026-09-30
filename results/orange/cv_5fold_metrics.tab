@@ -1,8 +1,0 @@
-Fold	Cohort_Size	Sensitivity	Specificity	Precision	F1_Score	ROC_AUC	Overall_Accuracy
-string	continuous	continuous	continuous	continuous	continuous	continuous	continuous
-meta	feature	feature	feature	feature	feature	feature	feature
-Fold 0	1014	0.9887	0.9954	0.9987	0.9937	0.9999	0.9310
-Fold 1	1014	0.9987	1.0000	1.0000	0.9994	0.9999	0.9527
-Fold 2	1014	1.0000	0.9362	0.9760	0.9879	0.9989	0.9408
-Fold 3	1014	0.9970	0.9943	0.9970	0.9970	0.9999	0.9546
-Fold 4	1014	1.0000	0.9051	0.9393	0.9687	0.9996	0.9201
