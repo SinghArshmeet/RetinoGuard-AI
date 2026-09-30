@@ -95,7 +95,7 @@ $$\mathcal{L}_{\text{Focal}}(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
 
 ## 5-Fold Cross-Validation & Benchmark Metrics
 
-![RetinoGuard AI Accuracy Benchmarks](accuracy_benchmark_charts.png)
+![RetinoGuard AI Accuracy Benchmarks](results/accuracy_benchmark_charts.png)
 
 ### 1. Primary Retinoblastoma Detection: 5-Fold Cross-Validation
 
@@ -132,7 +132,7 @@ $$\mathcal{L}_{\text{Focal}}(p_t) = -\alpha_t (1 - p_t)^\gamma \log(p_t)$$
   - **Dice Similarity Score:** **95.42%** (Loss: 0.1717)
   - **Skip Connection Gating:** Oktay et al. Attention Gates successfully suppress intense flash reflections from infant corneas.
 
-*Download Full Metrics Spreadsheet:* [`Retinoblastoma_Model_Benchmarks.xlsx`](file:///c:/Users/Arshmeet/OneDrive/Desktop/Projects/Retinoblastoma/Retinoblastoma_Model_Benchmarks.xlsx)
+*Download Full Metrics Spreadsheet:* [`results/Retinoblastoma_Model_Benchmarks.xlsx`](file:///c:/Users/Arshmeet/OneDrive/Desktop/Projects/Retinoblastoma/results/Retinoblastoma_Model_Benchmarks.xlsx)
 
 ---
 
@@ -153,13 +153,9 @@ The International Classification for Retinoblastoma (Murphree et al.) is impleme
 ## Repository Structure
 
 ```text
-Retinoblastoma/
-├── Dataset/                                   # Clinical Datasets & Preprocessed Cache
-│   ├── 01_Fundus_Classification/              # 5,070 multiclass fundus images (8 conditions)
-│   ├── 02_Tumor_Detection_YOLO_COCO/          # 197 bounding-box annotated tumor scans
-│   ├── 03_Tumor_Segmentation/                 # 21 paired high-resolution segmentation masks
-│   ├── 5fold_splits/                          # Patient-isolated GroupKFold CSV splits
-│   └── cache_preprocessed_256/                # Preprocessed illumination-standardized cache
+RetinoGuard-AI/
+├── archive/                                   # Archived project assets & initial design exports
+│   └── Final_UI_Stitch_Export.zip
 ├── checkpoints/                               # Trained Deep Learning Model Weights
 │   ├── rb_detector_resnet_cbam_best_fold_0.pt # Primary Detector Fold 0 (Sens: 98.9%)
 │   ├── rb_detector_resnet_cbam_best_fold_1.pt # Primary Detector Fold 1 (Sens: 99.9%)
@@ -168,15 +164,24 @@ Retinoblastoma/
 │   ├── rb_detector_resnet_cbam_best_fold_4.pt # Primary Detector Fold 4 (Sens: 100.0%)
 │   ├── rb_yolov8_best.pt                      # YOLOv8 Tumor Detector (mAP50: 94.2%)
 │   └── rb_attention_unet_best.pt              # Attention U-Net Segmentor (Dice: 95.4%)
-├── frontend/                                  # Web Application Interface
-│   └── index.html                             # Responsive Glassmorphic Medical UI
+├── demo_samples/                              # Bundled clinical fundus test cases for standalone testing
+│   ├── case_1_retinoblastoma.jpg
+│   ├── case_2_cataract.jpg
+│   ├── case_3_rop.jpg
+│   └── case_4_normal.jpg
+├── docs/                                      # Clinical validation & architecture reports
+│   └── TRAINING_COMPLETION_REPORT.md
+├── frontend/                                  # Clinical Web Application Interface
+│   └── index.html                             # Responsive Glassmorphic Ophthalmology UI
+├── notebooks/                                 # Research, exploration & training pipelines
+│   └── Retinoblastoma_Complete_Model_Pipeline.ipynb
 ├── results/                                   # Evaluation Outputs & Artifacts
 │   ├── predictions/                           # Output diagnostic visual overlays (.png)
 │   ├── accuracy_benchmark_charts.png          # High-resolution 300 DPI benchmark figure
 │   ├── Retinoblastoma_Model_Benchmarks.xlsx   # 5-Tab formatted Excel workbook
 │   ├── rb_detection_resnet_cbam_5fold_results.csv # Per-fold raw metrics
 │   └── rb_detection_resnet_cbam_5fold_summary.csv # Mean +/- Std summary table
-├── src/                                       # Core Production Library
+├── src/                                       # Production Library
 │   ├── data/                                  # Caching, dataset loaders, GroupKFold splitters
 │   ├── models/                                # ResNet-CBAM, Attention U-Net, ICRB Staging
 │   ├── preprocessing/                         # Circular FOV, Ben Graham, CLAHE, Reinhard
@@ -186,8 +191,8 @@ Retinoblastoma/
 ├── train.py                                   # 5-Fold ResNet-CBAM Training Pipeline
 ├── train_yolo.py                              # YOLOv8 Spatial Localization Pipeline
 ├── train_segmentation.py                      # Attention U-Net Boundary Segmentation Pipeline
-├── generate_benchmark_sheet_and_charts.py     # Excel & Chart Generation Suite
-└── TRAINING_COMPLETION_REPORT.md              # Technical project completion report
+├── requirements.txt                           # Python dependencies
+└── README.md                                  # Project overview, architecture, & quickstart guide
 ```
 
 ---

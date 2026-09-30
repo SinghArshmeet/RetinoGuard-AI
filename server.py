@@ -21,7 +21,7 @@ import cv2
 import numpy as np
 from fastapi import FastAPI, File, UploadFile, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, FileResponse
+from fastapi.responses import JSONResponse, FileResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from typing import List, Dict, Optional
@@ -470,6 +470,14 @@ async def diagnose_bilateral(
             "pineal_warning": pineal_alert
         }
     }
+
+# Mount results directory for serving benchmark charts and diagnostic outputs
+if os.path.exists("results"):
+    app.mount("/results", StaticFiles(directory="results"), name="results")
+
+@app.get("/favicon.ico", include_in_schema=False)
+def favicon():
+    return Response(status_code=204)
 
 # Mount static frontend directory if it exists
 if os.path.exists("frontend/dist"):
