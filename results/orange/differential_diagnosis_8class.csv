@@ -1,0 +1,9 @@
+Class_ID,Condition,Type,Samples,Sensitivity,Specificity,Precision,F1_Score
+0,Retinoblastoma,Malignant (Target),3995,0.9969,0.9662,0.9822,0.9895
+1,Pediatric Cataract,Benign Mimicker,204,0.9215,0.9942,0.8868,0.9038
+2,Retinopathy of Prematurity,Vascular Disease,205,0.8975,0.9961,0.9109,0.9041
+3,Healthy Control RetCam,Normal Control,205,0.9512,0.998,0.9606,0.9559
+4,Retinal Capillary Hemangioma,Benign Hamartoma,108,0.8704,0.9972,0.8785,0.8744
+5,Uveal Melanoma,Malignant Adult,108,0.8889,0.9968,0.8649,0.8767
+6,Choroidal Osteoma,Benign Ossifying,109,0.8532,0.9984,0.9118,0.8815
+7,Choroidal Hemangioma,Benign Vascular,136,0.8676,0.997,0.8872,0.8773
