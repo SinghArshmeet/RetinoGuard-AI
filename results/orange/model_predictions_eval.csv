@@ -1,0 +1,5 @@
+Image,Actual_Class,Predicted_Class,Malignancy_Verdict,P_Retinoblastoma,P_Differential,Certainty_Score,Entropy,Tumor_Count,Tumor_Area_Pct,ICRB_Stage,Risk_Category
+case_1_retinoblastoma.jpg,Retinoblastoma,Retinoblastoma,POSITIVE,0.9798,0.9783,95.5,0.1425,1,0.0,Group B,"Low Risk (Large Intraretinal Tumor > 3mm, No Seeds)"
+case_2_cataract.jpg,Pediatric Cataract,Pediatric Cataract,NEGATIVE,0.0496,0.9527,90.2,0.2848,2,0.0,Clear (Non-Neoplasm),Benign / Normal
+case_3_rop.jpg,Pediatric ROP,Pediatric ROP,NEGATIVE,0.0108,0.9511,96.9,0.0858,0,60.62,Clear (Non-Neoplasm),Benign / Normal
+case_4_normal.jpg,Normal Control,Pediatric Normal RetCam,NEGATIVE,0.0063,0.9099,98.8,0.0552,1,0.0,Clear (Non-Neoplasm),Benign / Normal
